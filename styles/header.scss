@@ -1,0 +1,38 @@
+// Header
+// --------------------------------------------------------------
+
+.header {
+    width: 100%;
+    margin-bottom: 2rem;
+    background-color: $brand-primary;
+}
+
+.navbar {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.navbar-nav {
+    margin-left: auto;
+    .nav-link {
+        color: #fff;
+    }
+}
+
+.navbar-toggler-right {
+    right: 0;
+}
+
+.github-icon {
+    float: left;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.25rem;
+    color: #fff;
+    fill: #fff;
+}
+
+.switch-lang-flag {
+    display: inline-block;
+    margin: 0 3px 2px 0;
+}

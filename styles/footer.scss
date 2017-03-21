@@ -1,0 +1,28 @@
+// Footer
+// --------------------------------------------------------------
+
+.footer {
+    padding: 20px;
+    background-color: #ddd;
+    p {
+        font-size: $font-size-base - 2;
+    }
+}
+
+.footer-dx {
+    text-align: right;
+    a {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        margin: 10px 0 0 10px;
+        font-size: 40px;
+        text-align: center;
+        opacity: 0.5;
+        &:hover,
+        &:focus {
+            opacity: 1;
+        }
+    }
+}

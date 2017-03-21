@@ -1,0 +1,33 @@
+// Code
+// --------------------------------------------------------------
+
+pre,
+code {
+	background: #eee;
+	font-family: monospace;
+	font-size: 14px;
+}
+pre {
+	margin: 1rem 0;
+	padding: 0.625rem 1.25rem;
+	border-left: 3px solid $brand-primary;
+	overflow: auto;
+}
+code {
+	border: 1px solid #ddd;
+	display: inline-block;
+	margin: 0 0 1px;
+	padding: 0 3px;
+	white-space: pre;
+}
+pre code {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+.token.comment,.token.prolog,.token.doctype,.token.cdata {color:#888;}
+.token.property,.token.tag,.token.boolean,.token.number,.token.constant,.token.symbol {color:#905;}
+.token.selector,.token.attr-name,.token.string,.token.builtin {color:#690;}
+.token.atrule,.token.attr-value,.token.punctuation,.token.keyword {color:#1e5799;}
+.token.regex,.token.important {color:#e90;}

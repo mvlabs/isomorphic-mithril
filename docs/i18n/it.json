@@ -1,0 +1,19 @@
+{
+    "header.title": "JS isomorfico con Mithril",
+    "sidebar.toc": "Indice dei contenuti",
+    "footer.project_by": "Un progetto di",
+    "footer.and": "e",
+    "footer.powered_by": "Powered by",
+    "footer.admin_area": "area admin",
+    "content.edit": "modifica",
+    "content.edit_on_github": "Modifica su GitHub",
+    "error.error": "Errore",
+    "error.not_found": "Contenuto non trovato",
+    "login.login": "Login",
+    "login.logout": "Esci",
+    "login.email_address": "Indirizzo email",
+    "login.password": "Password",
+    "admin.admin": "Admin",
+    "admin.not_authorized": "Devi aver effettuato il login per visualizzare questa pagina",
+    "admin.welcome_back": "Bentornato"
+}

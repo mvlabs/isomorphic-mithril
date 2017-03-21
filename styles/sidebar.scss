@@ -1,0 +1,15 @@
+// Sidebar
+// --------------------------------------------------------------
+
+.toc {
+    margin: 0;
+    padding: 0 1rem;
+}
+
+.toc-link {
+    display: block;
+    padding: 0 0.25rem;
+    &.active {
+        font-weight: bold;
+    }
+}

@@ -1,0 +1,29 @@
+// Loading dots
+// --------------------------------------------------------------
+// Credits to Martin Wolf
+// https://martinwolf.org/2015/01/08/pure-css-savingloading-dots-animation/
+
+.loadingdots {
+    line-height: 3px;
+    font-size: 24px;
+    font-style: normal;
+}
+
+.loadingdot {
+    animation-name: blink;
+    animation-duration: 1.4s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+    &.loadingdot-second {
+        animation-delay: .2s;
+    }
+    &.loadingdot-third {
+        animation-delay: .4s;
+    }
+}
+
+@keyframes blink {
+    0% {opacity: .2;}
+    20% {opacity: 1;}
+    100% {opacity: .2;}
+}

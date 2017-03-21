@@ -1,0 +1,3 @@
+# Errors
+
+*- soon available -*

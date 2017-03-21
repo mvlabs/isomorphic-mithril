@@ -1,0 +1,19 @@
+{
+    "header.title": "Isomorphic JS with Mithril",
+    "sidebar.toc": "Table of contents",
+    "footer.project_by": "A project by",
+    "footer.and": "and",
+    "footer.powered_by": "Powered by",
+    "footer.admin_area": "admin area",
+    "content.edit": "edit",
+    "content.edit_on_github": "Edit on GitHub",
+    "error.error": "Error",
+    "error.not_found": "Content not found",
+    "login.login": "Login",
+    "login.logout": "Logout",
+    "login.email_address": "Email address",
+    "login.password": "Password",
+    "admin.admin": "Admin",
+    "admin.not_authorized": "You need to be logged in to display this page",
+    "admin.welcome_back": "Welcome back"
+}

@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "slug": "en",
+        "name": "English",
+        "native_name": "English",
+        "locale": "en_US"
+    },
+    {
+        "id": 2,
+        "slug": "it",
+        "name": "Italian",
+        "native_name": "Italiano",
+        "locale": "it_IT"
+    },
+    {
+        "id": 3,
+        "slug": "de",
+        "name": "German",
+        "native_name": "Deutsch",
+        "locale": "de_DE"
+    }
+]
