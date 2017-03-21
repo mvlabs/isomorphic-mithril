@@ -43,8 +43,8 @@ module.exports = {
         m(Header, vm),
         m('main.main.container', m('.row', [
             m('.col.col-lg-9.push-lg-3', [
-                m(EditButton),
-                vnode.state.loading ? m(LoadingDots, { activeLanguage: vm.globals.activeLanguage, section: vm.slug }) : vm.section.content
+                m(EditButton, { activeLanguage: vm.globals.activeLanguage, section: vm.slug }),
+                vnode.state.loading ? m(LoadingDots) : vm.section.content
             ]),
             m(Menu, vm)
         ])),
