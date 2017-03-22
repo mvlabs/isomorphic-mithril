@@ -8,8 +8,11 @@ This website is a showcase of the challenges that we faced implementing an isomo
 The aim is to present a real case study where we chose **Mithril** for its speed, simplicity and elegance. 
 We will show the solutions we used to solve the common problems for this kind of app.
 
-The contents and the app are still work in progress and susceptible to changes. To suggest any improvement please see 
-the *Contributing* section below.
+The source code of the website is available on GitHub:  
+[https://github.com/mvlabs/isomorphic-mithril](https://github.com/mvlabs/isomorphic-mithril)
+
+The contents and the app are still work in progress and susceptible to changes. Please see 
+the *Contributing* section below for suggestions and improvements.
 
 
 ## Challenges
@@ -17,10 +20,12 @@ the *Contributing* section below.
 We will cover some of the most common issues that need to be solved in the development of an average website. 
 Our app needs to:
 
-- use shared routes between server and client
-- use shared state between server and client
-- be multilanguage (i18n, contextual language switch)
-- load content dynamically (in our case from Markdown files)
+- use **shared routes** between server and client
+- use **shared state** between server and client and across components
+- be **multilanguage** (i18n, contextual language switch)
+- load **dynamic contents** (in our case from Markdown files)
+- implement a basic **user auth**
+- allow easy **integration of third party libraries**
 - manage different kind of errors appropriately
 
 
