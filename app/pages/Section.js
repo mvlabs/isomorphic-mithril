@@ -8,6 +8,7 @@ const LoadingDots = require('../components/LoadingDots.js');
 const Layout = require('../components/Layout.js');
 const Menu = require('../components/Menu.js');
 const NotFound = require('./NotFound.js');
+const Prism = process.browser ? require('prismjs') : null;
 
 
 let vm;

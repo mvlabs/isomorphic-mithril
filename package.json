@@ -10,7 +10,7 @@
     "node": ">= 6.0.0",
     "npm": ">=3.8.6"
   },
-  "description": "Isomorphic web application with Mithril.js",
+  "description": "Isomorphic SEO demo",
   "main": "index.js",
   "scripts": {
     "start": "npm run watch",
@@ -40,6 +40,7 @@
     "mithril-node-render": "^2.0.0",
     "moment": "^2.14.1",
     "morgan": "^1.8.1",
+    "prismjs": "^1.6.0",
     "store": "^1.3.20",
     "string-hash": "^1.1.1",
     "translate.js": "^0.6.0",
@@ -66,7 +67,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mvlabs/isomorphic-mithril.git"
+    "url": "ssh://git@git.mvlabs.it:4222/internals/mithril-isomorphic-website.git"
   },
   "license": "ISC"
 }
