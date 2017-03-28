@@ -3,7 +3,7 @@ const marked = require('marked');
 const request = require('./request.js');
 
 const port = process.env.PORT || 3000;
-const localUrl = 'http://' + (process.browser ? window.location.host : '127.0.0.1:' + port);
+const localUrl = window.location.protocol + '//' + (process.browser ? window.location.host : '127.0.0.1:' + port);
 const localData = localUrl + '/docs';
 let activeLanguage;
 
