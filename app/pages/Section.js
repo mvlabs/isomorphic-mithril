@@ -20,7 +20,6 @@ module.exports = {
             if (params.res) {
                 params.res.redirect('/');
             } else {
-                console.log('SONO QUI');
                 m.route.set('/');
             }
         } else return {

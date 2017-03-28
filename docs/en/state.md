@@ -58,7 +58,7 @@ We change our main components to use the state manager, which can be accessed vi
 
 ```javascript
 oninit: vnode => new Promise((resolve) => {
-    const stateman = vnode.state.stateman;
+    const stateman = vnode.attrs.stateman;
     if (!stateman.get('home.content')) {
         vnode.state.loading = true;
         resources.getSection('index')
