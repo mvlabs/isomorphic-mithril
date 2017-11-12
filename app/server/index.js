@@ -8,7 +8,6 @@ const cors = require('cors');
 const express = require('express');
 const hash = require('./../../stats.json').hash;
 const m = require('mithril');
-const moment = require('moment');
 const logger = require('morgan');
 const resources = require('../resources.js');
 const routes = require('../routes.js');
@@ -17,8 +16,6 @@ const t = require('../translate.js');
 const toHTML = require('mithril-node-render');
 const user = require('./user.js');
 const utils = require('./utils.js');
-
-const env = process.env.NODE_ENV || 'dev';
 
 const app = express();
 const router = express.Router();
@@ -52,7 +49,6 @@ Object.keys(routes).forEach((route) => {
         const stateman = Object.create(stateManager);
         stateman.init({
             globals: {
-                dateFormat: moment.localeData().longDateFormat('L') || 'DD/MM/YYYY',
                 activeLanguage: activeLanguage
             },
             hash,
