@@ -40,8 +40,8 @@ module.exports = {
 
     view: vnode => m(Layout, vm, [
         m(Header, vm),
-        m('main.main.container', m('.row', [
-            m('.col.col-lg-9.push-lg-3', [
+        m('main.main.section', m('.container', m('.columns.is-desktop.reverse-row-order', [
+            m('.column.is-three-quarters-desktop.content', [
                 m('h1', t('admin.admin')),
                 vm.error ? m('.alert.alert-warning', [
                     t('admin.not_authorized') + '. ',
@@ -54,7 +54,7 @@ module.exports = {
                         t('admin.welcome_back') + ', ',
                         m('strong', vm.userData.name.title + ' ' + vm.userData.name.first + ' ' + vm.userData.name.last),
                         '. ',
-                        m('button.btn-link', {
+                        m('button.button.is-small', {
                             onclick: vm.fetcher.logout
                         }, t('login.logout'))
                     ]),
@@ -99,7 +99,7 @@ module.exports = {
                 ]
             ]),
             m(Menu, vm)
-        ])),
+        ]))),
         m(Footer, vm)
     ])
 };

@@ -5,6 +5,16 @@
     font-size: 1.25rem;
 }
 
+.navbar-menu {
+    background-color: $primary;
+    .navbar-item,
+    .navbar-link {
+        @include touch {
+            color: #fff;
+        }
+    }
+}
+
 .github-icon {
     float: left;
     margin: .5rem .375rem 0 0;

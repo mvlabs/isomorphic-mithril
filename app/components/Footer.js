@@ -26,7 +26,7 @@ module.exports = {
                         target: '_blank',
                         rel: 'noopener noreferrer',
                         title: 'MVlabs'
-                    }, m('img', {
+                    }, m('img.va-mid', {
                         src: '/assets/img/mv-logo.png',
                         alt: 'MVlabs',
                         width: '100'

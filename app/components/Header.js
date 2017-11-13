@@ -6,63 +6,27 @@ module.exports = {
     oninit: vnode => {
         vnode.state.isAuth = vnode.attrs.fetcher.isAuth();
     },
-    
-    // view: vnode => m('nav.navbar.is-primary', [
-    //     m('.container', [
-    //         m('nav.navbar[aria-label="dropdown navigation"][role="navigation"]', [
-    //             m('.navbar-item.has-dropdown', [
-    //                 m('a.navbar-link', 'Docs'),
-    //                 m('.navbar-dropdown', [
-    //                     m('a.navbar-item', 'Overview'),
-    //                     m('a.navbar-item', 'Elements'),
-    //                     m('a.navbar-item', 'Components'),
-    //                     m('hr.navbar-divider'),
-    //                     m('.navbar-item', 'Version 0.6.1')
-    //                 ])
-    //             ])
-    //         ])
-    //     ]),
-    //     m('.container', [
-    //         m('a.navbar-brand', {
-    //             href: '/' + vnode.attrs.globals.activeLanguage + '/',
-    //             oncreate: m.route.link
-    //         }, t('header.title')),
-    //         m('nav.navbar.navbar-toggleable-sm.navbar-inverse.bg-primary', [
-    //             m('button.navbar-toggler.navbar-toggler-right[aria-controls="navbar-menu"][aria-expanded="false"][aria-label="Toggle navigation"][data-target="#navbar-menu"][data-toggle="collapse"][type="button"]', [
-    //                 m('span.navbar-toggler-icon')
-    //             ]),
-    //             m('a.navbar-brand', {
-    //                 href: '/' + vnode.attrs.globals.activeLanguage + '/',
-    //                 oncreate: m.route.link
-    //             }, t('header.title')),
-    //             m('.collapse.navbar-collapse[id="navbar-menu"]', [
-    //                 m('ul.navbar-nav', [
-    //                     m('li.nav-item', [
-    //                         m('a.nav-link', {
-    //                             href: 'https://github.com/mvlabs/isomorphic-mithril',
-    //                             target: '_blank',
-    //                             rel: 'noopener noreferrer'
-    //                         }, [
-    //                             m('.github-icon', m('img', {
-    //                                 src: 'https://icongr.am/fontawesome/github.svg?color=ffffff&size=24'
-    //                             })),
-    //                       'GitHub'
-    //                         ])
-    //                     ]),
-    //                     m(LanguagePicker, {
-    //                         globals: vnode.attrs.globals,
-    //                         slug: vnode.attrs.slug,
-    //                         isSection: vnode.attrs.isSection === true
-    //                     }),
-    //                     vnode.state.isAuth ? m('button.btn-link.nav-link', {
-    //                         onclick: vnode.attrs.fetcher.logout
-    //                     }, t('login.logout')) : null
-    //                 ])
-    //             ])
-    //         ])
-    //     ])
-    // ])
-    
+
+    oncreate: () => {
+        // Get all "navbar-burger" elements
+        const navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+        console.log('navbarBurgers:', navbarBurgers);
+        // Check if there are any navbar burgers
+        if (navbarBurgers.length > 0) {
+            // Add a click event on each of them
+            navbarBurgers.forEach(el => {
+                el.addEventListener('click', () => {
+                    // Get the target from the "data-target" attribute
+                    const dataTarget = el.dataset.target;
+                    const target = document.getElementById(dataTarget);
+                    // Toggle the class on both the "navbar-burger" and the "navbar-menu"
+                    el.classList.toggle('is-active');
+                    target.classList.toggle('is-active');
+                });
+            });
+        }
+    },
+
     view: vnode => m('nav.navbar.is-primary', [
         m('.container', [
             m('.navbar-brand', [
@@ -76,16 +40,16 @@ module.exports = {
                     m('span')
                 ])
             ]),
-            m('.navbar-menu[id="navbar-menu"]', [
+            m('.navbar-menu[id="navbar-menu"].is-primary', [
                 m('.navbar-end', [
                     m('a.navbar-item', {
                         href: 'https://github.com/mvlabs/isomorphic-mithril',
                         target: '_blank',
                         rel: 'noopener noreferrer'
                     }, [
-                        m('.github-icon', m('img', {
+                        m('img.va-mid.mr2', {
                             src: 'https://icongr.am/fontawesome/github.svg?color=ffffff&size=20'
-                        })),
+                        }),
                         'Github'
                     ]),
                     m(LanguagePicker, {

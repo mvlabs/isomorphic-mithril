@@ -23,3 +23,25 @@
 h1 {
     padding-right: 3rem;
 }
+
+.va-mid {
+    vertical-align: middle;
+}
+
+// Fix conflict between Bulma and Prism styles
+.token.number {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: transparent;
+    border-radius: 0;
+    display: inline;
+    font-size: inherit;
+    height: auto;
+    justify-content: center;
+    margin-right: 0;
+    min-width: 0;
+    padding: 0;
+    text-align: inherit;
+    vertical-align: top;
+}

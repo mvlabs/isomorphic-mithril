@@ -49,14 +49,17 @@ module.exports = {
 
     view: vnode => m(Layout, vm, [
         m(Header, vm),
-        m('main.main.container', m('.row', [
-            m('.col.col-lg-9.push-lg-3', [
+        m('main.main.section', m('.container', m('.columns.is-desktop.reverse-row-order', [
+            m('.column.is-three-quarters-desktop.content', [
                 m('h1', t('login.login')),
-                m('form.login-form', [
+                m('form.login-form.', [
                     vnode.state.error ? m('p.alert.alert-danger', m('strong', vnode.state.error.message)) : null,
-                    m('fieldset.form-group', [
-                        m('label[for="login-email"][autocomplete="login-email"]', t('login.email_address')),
-                        m('input.form-control.input-lg', {
+                    m('label.mb2', {
+                        for: 'login-email',
+                        autocomplete: 'login-email'
+                    }, t('login.email_address')),
+                    m('.control', [
+                        m('input.input', {
                             oninput: m.withAttr('value', (val) => {vnode.state.loginForm.email = val;}),
                             value: vnode.state.loginForm.email,
                             id: 'login-email',
@@ -66,9 +69,12 @@ module.exports = {
                             onkeypress: withKey(vnode.state.submit)
                         })
                     ]),
-                    m('fieldset.form-group', [
-                        m('label[for="login-password"][autocomplete="login-password"]', t('login.password')),
-                        m('input.form-control.input-lg', {
+                    m('label.mb2', {
+                        for: 'login-password',
+                        autocomplete: 'login-password'
+                    }, t('login.password')),
+                    m('.control', [
+                        m('input.input', {
                             oninput: m.withAttr('value', (val) => {vnode.state.loginForm.password = val;}),
                             value: vnode.state.loginForm.password,
                             id: 'login-password',
@@ -77,12 +83,16 @@ module.exports = {
                             onkeypress: withKey(vnode.state.submit)
                         })
                     ]),
-                    m('.actions', vnode.state.loading ? m('button.btn.btn-primary.btn-block.btn-lg.text-uppercase[type="button"]', m('i.fa.fa-spinner.fa-pulse')) :
-                    m('button.btn.btn-primary.btn-lg.text-uppercase[type="button"]', {onclick: vnode.state.submit}, t('login.login')))
+                    m('.actions', vnode.state.loading ? m('button.btn.btn-primary.btn-block.btn-lg.text-uppercase', {
+                        type: 'button'
+                    }, m('i.fa.fa-spinner.fa-pulse')) : m('button.button.is-primary.is-uppercase.mt2', {
+                        type: 'button',
+                        onclick: vnode.state.submit
+                    }, t('login.login')))
                 ])
             ]),
             m(Menu, vm)
-        ])),
+        ]))),
         m(Footer, vm)
     ])
 };
