@@ -38,7 +38,7 @@ We will use the following tools:
  - [webpack 2](https://webpack.github.io/) as bundler
  - [Babel](http://babeljs.io/) as JS compiler (ES6 to ES5 transpiler)
  - [ESlint](http://eslint.org/) as JS linter
- - [Bootstrap 4](http://v4-alpha.getbootstrap.com/) as HTML/CSS/JS framework
+ - [Bulma](https://bulma.io/) as HTML/CSS/JS framework
  - [Sass](http://sass-lang.com/) as CSS preprocessor
  
  

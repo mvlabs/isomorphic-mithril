@@ -1,38 +1,16 @@
 // Header
 // --------------------------------------------------------------
 
-.header {
-    width: 100%;
-    margin-bottom: 2rem;
-    background-color: $brand-primary;
-}
-
-.navbar {
-    padding-left: 0;
-    padding-right: 0;
-}
-
-.navbar-nav {
-    margin-left: auto;
-    .nav-link {
-        color: #fff;
-    }
-}
-
-.navbar-toggler-right {
-    right: 0;
+.navbar-brand {
+    font-size: 1.25rem;
 }
 
 .github-icon {
     float: left;
-    width: 1.5rem;
-    height: 1.5rem;
-    margin-right: 0.25rem;
-    color: #fff;
-    fill: #fff;
+    margin: .5rem .375rem 0 0;
 }
 
 .switch-lang-flag {
     display: inline-block;
-    margin: 0 3px 2px 0;
+    margin: .125rem .5rem 0 0;
 }

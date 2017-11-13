@@ -1,15 +1,13 @@
 const m = require('mithril');
 const componentInit = require('../componentInit.js');
-const EditButton = require('../components/EditButton.js');
-const Footer = require('../components/Footer.js');
+const Footer = require('../components/Footer');
 const he = require('he');
 const Header = require('../components/Header.js');
-const LoadingDots = require('../components/LoadingDots.js');
-const Layout = require('../components/Layout.js');
-const Menu = require('../components/Menu.js');
+const LoadingDots = require('../components/LoadingDots');
+const Layout = require('../components/Layout');
+const Menu = require('../components/Menu');
+const SectionContent = require('../components/SectionContent');
 const NotFound = require('./NotFound.js');
-const Prism = process.browser ? require('prismjs') : null;
-
 
 let vm;
 
@@ -59,15 +57,16 @@ module.exports = {
 
             view: (vnode) => vm.error ? m(NotFound, vm) : m(Layout, vm, [
                 m(Header, vm),
-                m('main.main.container', m('.row', [
-                    m('.col.col-lg-9.push-lg-3', [
-                        m(EditButton, { activeLanguage: vm.globals.activeLanguage, section: vm.slug }),
-                        vnode.state.loading || !vm.section.content ? m(LoadingDots) : m('div', {
-                            oncreate: () => Prism.highlightAll() // eslint-disable-line
-                        }, vm.section.content)
+                m('main.main.section', m('.container', m('.columns.is-desktop.reverse-row-order', [
+                    m('.column.is-three-quarters-desktop.content', [
+                        vnode.state.loading || !vm.section.content ? m(LoadingDots) : m(SectionContent, {
+                            content: vm.section.content,
+                            activeLanguage: vm.globals.activeLanguage,
+                            section: vm.slug
+                        })
                     ]),
                     m(Menu, vm)
-                ])),
+                ]))),
                 m(Footer, vm)
             ])
         };

@@ -1,19 +1,25 @@
 // General
 // --------------------------------------------------------------
 
+.reverse-row-order {
+    flex-direction: row-reverse;
+}
+
 .main {
     min-height: 85vh;
     padding-bottom: 40px;
-}
-
-h1 {
-    margin-bottom: 1rem;
 }
 
 .login-form {
     max-width: 18rem;
 }
 
-.btn-link:hover {
-    cursor: pointer;
+.edit-page {
+    position: absolute;
+    top: 1rem;
+    right: 0;
+}
+
+h1 {
+    padding-right: 3rem;
 }

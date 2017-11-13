@@ -16,7 +16,11 @@ const LayoutClient = {
     oncreate: (vnode) => {
         const head = setHead(vnode);
         document.title = head.title;
-        $('meta[name=description]').replaceWith( '<meta name="description" content="' + head.description + '">' );
+        // $('meta[name=description]').replaceWith( '<meta name="description" content="' + head.description + '">' );
+        const metaList = document.getElementsByTagName('META');
+        metaList[3].setAttribute('name', 'description');
+        metaList[3].setAttribute('content', head.description);
+        console.log('metaList:', metaList);
     },
 
     view: vnode => vnode.children
@@ -39,19 +43,13 @@ const LayoutServer = {
                 m('meta', {'http-equiv': 'x-ua-compatible', content: 'ie=edge'}),
                 m('title', vnode.state.head.title),
                 m('meta', {name: 'description', content: vnode.state.head.description}),
-                m('link', {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Open+Sans'}),
                 m('link', {rel: 'stylesheet', href: `/assets/css/styles.${vnode.state.hash}.min.css`}),
                 m('link', {rel: 'shortcut icon', href: '/assets/img/favicon.ico'})
             ]),
             m('body', [
                 vnode.children,
-                m('script', {src: '/assets/js/vendor/moment-with-locales.min.js'}),
                 m('script', `window.__preloadedState = ${vnode.attrs.stateman._getString()}`),
                 m('script', {src: `/assets/js/app.${vnode.state.hash}.min.js`}),
-                m('script', {src: '/assets/js/vendor/jquery-3.1.1.min.js'}),
-                m('script', {src: '/assets/js/vendor/tether.min.js'}),
-                m('script', {src: '/assets/js/vendor/bootstrap.min.js'}),
-                m('script', {src: '/assets/js/vendor/moment.min.js'}),
                 m('script', `(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)

@@ -7,7 +7,7 @@ module.exports = {
         vnode.state.sections = vnode.attrs.sections || [];
     },
 
-    view: vnode => m('.sidebar.col-lg-3.pull-lg-9', [
+    view: vnode => m('.sidebar.column', [
         m('nav', [
             m('p', m('strong', t('sidebar.toc'))),
             m('ol.toc', vnode.state.sections.map(section => m('li', m('a.toc-link', {

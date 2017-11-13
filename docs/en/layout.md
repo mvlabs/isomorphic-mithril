@@ -77,17 +77,13 @@ const LayoutServer = {
                 m('meta', {'http-equiv': 'x-ua-compatible', content: 'ie=edge'}),
                 m('title', vnode.state.head.title),
                 m('meta', {name: 'description', content: vnode.state.head.description}),
-                m('link', {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Open+Sans'}),
                 m('link', {rel: 'stylesheet', href: `/assets/css/styles.min.css`}),
                 m('link', {rel: 'shortcut icon', href: '/assets/img/favicon.ico'})
             ]),
             m('body', [
                 vnode.children,
                 m('script', `window.__preloadedState = ${vnode.attrs.stateman._getString()}`),
-                m('script', {src: `/assets/js/app.min.js`}),
-                m('script', {src: '/assets/js/vendor/jquery-3.1.1.min.js'}),
-                m('script', {src: '/assets/js/vendor/tether.min.js'}),
-                m('script', {src: '/assets/js/vendor/bootstrap.min.js'})
+                m('script', {src: `/assets/js/app.min.js`})
             ])
         ])
     ]

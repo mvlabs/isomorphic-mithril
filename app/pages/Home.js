@@ -1,8 +1,8 @@
 const m = require('mithril');
+const he = require('he');
 const componentInit = require('../componentInit.js');
 const EditButton = require('../components/EditButton.js');
 const Footer = require('../components/Footer.js');
-const he = require('he');
 const Header = require('../components/Header.js');
 const LoadingDots = require('../components/LoadingDots.js');
 const Layout = require('../components/Layout.js');
@@ -41,13 +41,13 @@ module.exports = {
 
     view: vnode => vm.error ? m(NotFound, vm) : m(Layout, vm, [
         m(Header, vm),
-        m('main.main.container', m('.row', [
-            m('.col.col-lg-9.push-lg-3', [
-                m(EditButton, { activeLanguage: vm.globals.activeLanguage, section: vm.slug }),
-                vnode.state.loading ? m(LoadingDots) : vm.section.content
+        m('main.main.section', m('.container', m('.columns.is-desktop.reverse-row-order', [
+            m('.column.is-three-quarters-desktop.content', [
+                vnode.state.loading ? m(LoadingDots) : vm.section.content,
+                m(EditButton, { activeLanguage: vm.globals.activeLanguage, section: vm.slug })
             ]),
             m(Menu, vm)
-        ])),
+        ]))),
         m(Footer, vm)
     ])
 };

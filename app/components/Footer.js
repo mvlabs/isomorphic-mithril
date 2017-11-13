@@ -4,8 +4,8 @@ const t = require('../translate.js');
 module.exports = {
     view: vnode => m('footer.footer', [
         m('.container', [
-            m('.row', [
-                m('.col.col-12.col-lg-9.push-lg-3.text-lg-right', [
+            m('.columns.is-desktop.reverse-row-order', [
+                m('.column.is-three-quarters-desktop.has-text-right-desktop', [
                     t('footer.project_by') + ' ',
                     m('a', {
                         href: 'http://www.acxwebdesign.com/',
@@ -32,7 +32,7 @@ module.exports = {
                         width: '100'
                     }))
                 ]),
-                m('.col.col-12.col-lg-3.pull-lg-9', [
+                m('.column', [
                     m('a', {
                         href: '/' + vnode.attrs.globals.activeLanguage + '/admin',
                         oncreate: m.route.link
