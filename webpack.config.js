@@ -1,5 +1,6 @@
 const autoprefixer = require('autoprefixer');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const cssnano = require('cssnano');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const fs = require('fs');
@@ -7,27 +8,7 @@ const path = require('path');
 const precss = require('precss');
 const ReloadServerPlugin = require('reload-server-webpack-plugin');
 
-const prod = process.argv.indexOf('-p') !== -1;
-
-
-const cleanAssets = (startPath, filter) => {
-    if (!fs.existsSync(startPath)) {
-        console.log('no dir ', startPath);
-        return;
-    }
-
-    const files = fs.readdirSync(startPath);
-
-    files.map((file) => {
-        const filename = path.join(startPath, file);
-
-        if (filename.indexOf(filter) >= 0) {
-            fs.unlinkSync(filename);
-            console.log('-- cleaned: ', filename);
-        }
-    });
-};
-
+const isProduction = process.argv.indexOf('-p') !== -1;
 
 const config = {
     name: 'client',
@@ -35,7 +16,7 @@ const config = {
     context: path.resolve(__dirname, './'),
     entry: {
         './assets/js/app': './app/index.js',
-        './assets/css/styles': './styles/style.scss'
+        './assets/css/style': './styles/style.scss'
     },
     output: {
         path: path.resolve(__dirname, './'),
@@ -59,11 +40,11 @@ const config = {
                             loader: 'postcss-loader',
                             options: {
                                 plugins() {
-                                    return [
+                                    return isProduction ? [
                                         precss,
                                         autoprefixer,
                                         cssnano
-                                    ];
+                                    ] : [];
                                 }
                             }
                         },
@@ -74,27 +55,27 @@ const config = {
         ]
     },
     plugins: [
-        function() {
-            cleanAssets('./assets/css/', '.css');
-            cleanAssets('./assets/js/', '.js');
-        },
+        new CleanWebpackPlugin(['assets/css/*.*', 'assets/js/*.*']),
         new ExtractTextPlugin('[name].[hash].min.css'),
-        function() {
+        function () {
             this.plugin('done', (stats) => {
                 const hash = { hash: stats.hash };
                 fs.writeFileSync(
                     path.join(__dirname, './', 'stats.json'),
                     JSON.stringify(hash)
                 );
-
-                cleanAssets(path.join(__dirname, './assets/css/'), '.js');
+                const filesToClean = fs.readdirSync(path.join(__dirname, './assets/css')).filter(file => file.match(/.*\.(js)/ig));
+                if (filesToClean.length) fs.unlink(path.join(__dirname, `./assets/css/${filesToClean[0]}`));
             });
         }
     ]
 };
 
-if (!prod) {
-    config.plugins.push(new ReloadServerPlugin({ script: './server.js' }));
+// Development mode
+if (!isProduction) {
+    config.plugins.push(new ReloadServerPlugin({
+        script: './server.js'
+    }));
     config.plugins.push(new BrowserSyncPlugin({
         host: 'localhost',
         port: 4000,
