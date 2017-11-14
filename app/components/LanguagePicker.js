@@ -6,7 +6,7 @@ module.exports = {
     view: vnode => m('.navbar-item.has-dropdown.is-hoverable', [
         vnode.attrs.globals.activeLanguage ? m('a.navbar-link.is-uppercase', [
             m('img.switch-lang-flag', {
-                src: `/assets/img/flags/${vnode.attrs.globals.activeLanguage}.png`,
+                src: `/assets/img/flag-${vnode.attrs.globals.activeLanguage}.png`,
                 alt: ''
             }),
             vnode.attrs.globals.activeLanguage
@@ -15,7 +15,7 @@ module.exports = {
             href: '/' + language.slug + '/' + (vnode.attrs.slug === 'index' ? '' : (vnode.attrs.isSection ? 'sections/' : '') + vnode.attrs.slug)
         }, [
             m('img.switch-lang-flag', {
-                src: `/assets/img/flags/${language.slug}.png`,
+                src: `/assets/img/flag-${language.slug}.png`,
                 alt: ''
             }),
             language.name
