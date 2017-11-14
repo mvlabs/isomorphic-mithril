@@ -1,12 +1,18 @@
 // General
 // --------------------------------------------------------------
 
+.wrapper {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
 .reverse-row-order {
     flex-direction: row-reverse;
 }
 
 .main {
-    min-height: 85vh;
+    flex: 1;
     padding-bottom: 40px;
 }
 
