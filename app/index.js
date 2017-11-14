@@ -39,6 +39,5 @@ fetcher.getTranslations()
     })
     .then(() => {
         m.route.prefix('');
-        const appContainer = document.getElementById('app');
-        m.route(appContainer, '/', clientRoutes);
+        m.route(document.body, '/', clientRoutes);
     });

@@ -19,7 +19,7 @@ module.exports = {
         vnode.state.errorMessage = vm.error.message === 'Not Found' ? t('error.not_found') : '?';
     },
 
-    view: vnode => m(Layout, vm, [
+    view: vnode => m(Layout, vm, m('.wrap', [
         m(Header, vm),
         m('main.main.container', m('.row', [
             m('.col.col-lg-9.push-lg-3', [
@@ -32,5 +32,5 @@ module.exports = {
             m(Menu, vm)
         ])),
         m(Footer, vm)
-    ])
+    ]))
 };

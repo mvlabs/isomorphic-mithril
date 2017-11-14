@@ -55,7 +55,7 @@ module.exports = {
                 }
             }),
 
-            view: (vnode) => vm.error ? m(NotFound, vm) : m(Layout, vm, [
+            view: (vnode) => vm.error ? m(NotFound, vm) : m(Layout, vm, m('.wrap', [
                 m(Header, vm),
                 m('main.main.section', m('.container', m('.columns.is-desktop.reverse-row-order', [
                     m('.column.is-three-quarters-desktop.content', [
@@ -68,7 +68,7 @@ module.exports = {
                     m(Menu, vm)
                 ]))),
                 m(Footer, vm)
-            ])
+            ]))
         };
     }
 };

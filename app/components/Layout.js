@@ -47,7 +47,7 @@ const LayoutServer = {
                 m('link', {rel: 'shortcut icon', href: '/assets/img/favicon.ico'})
             ]),
             m('body', [
-                m('#app', vnode.children),
+                vnode.children,
                 m('script', `window.__preloadedState = ${vnode.attrs.stateman._getString()}`),
                 m('script', {src: `/assets/js/app.${vnode.state.hash}.min.js`}),
                 m('script', `(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
