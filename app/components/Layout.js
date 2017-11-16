@@ -14,6 +14,7 @@ const setHead = (vnode) => {
 // CLIENT SIDE LAYOUT
 const LayoutClient = {
     oncreate: (vnode) => {
+        window.scrollTo(0, 0);
         const head = setHead(vnode);
         document.title = head.title;
         // $('meta[name=description]').replaceWith( '<meta name="description" content="' + head.description + '">' );
