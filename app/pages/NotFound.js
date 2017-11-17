@@ -21,8 +21,8 @@ module.exports = {
 
     view: vnode => m(Layout, vm, m('.wrap', [
         m(Header, vm),
-        m('main.main.container', m('.row', [
-            m('.col.col-lg-9.push-lg-3', [
+        m('main.main.section', m('.container', m('.columns.is-desktop.reverse-row-order', [
+            m('.column.is-three-quarters-desktop.content', [
                 m('h1', t('error.error') + ' ' + vm.error.status + ': ' + vnode.state.errorMessage),
                 m('p.text-center', m('img.img-fluid', {
                     src: `/assets/img/${vm.error.status}.jpg`,
@@ -30,7 +30,7 @@ module.exports = {
                 }))
             ]),
             m(Menu, vm)
-        ])),
+        ]))),
         m(Footer, vm)
     ]))
 };
