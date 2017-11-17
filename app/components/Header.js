@@ -29,7 +29,7 @@ module.exports = {
     view: vnode => m('nav.navbar.is-primary', [
         m('.container', [
             m('.navbar-brand', [
-                m('a.navbar-item[href="https://bulma.io"]', {
+                m('a.navbar-item', {
                     href: `/${vnode.attrs.globals.activeLanguage}/`,
                     oncreate: m.route.link
                 }, t('header.title')),
