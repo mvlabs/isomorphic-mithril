@@ -21,7 +21,6 @@ const LayoutClient = {
         const metaList = document.getElementsByTagName('META');
         metaList[3].setAttribute('name', 'description');
         metaList[3].setAttribute('content', head.description);
-        console.log('metaList:', metaList);
     },
 
     view: vnode => vnode.children
