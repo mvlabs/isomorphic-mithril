@@ -45,7 +45,7 @@ Useremo i seguenti strumenti:
  
 Un ringraziamento speciale a coloro che hanno reso possible la realizzazione di questo sito:
  
-- [MVlabs](http://mvlabs.it/) per averci dato l'opportunità di lavorare a questo progetto
+- [MV Labs](http://mvlabs.it/) per averci dato l'opportunità di lavorare a questo progetto
 - [Leo Horie](https://github.com/lhorie) come creatore e manutentore di [Mithril](http://mithril.js.org/)
 - [Stephan Hoyer](https://github.com/StephanHoyer) come creatore e manutentore di [mithril-node-render](https://github.com/StephanHoyer/mithril-node-render) e [translate.js](https://github.com/StephanHoyer/translate.js)
 

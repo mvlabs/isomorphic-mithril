@@ -46,7 +46,7 @@ We will use the following tools:
  
 A special thank you to these people to making this possible:
  
-- [MVlabs](http://mvlabs.it/) for giving us the opportunity to work at this project
+- [MV Labs](http://mvlabs.it/) for giving us the opportunity to work at this project
 - [Leo Horie](https://github.com/lhorie) for developing and maintaining [Mithril](http://mithril.js.org/)
 - [Stephan Hoyer](https://github.com/StephanHoyer) for developing and maintaining 
 [mithril-node-render](https://github.com/StephanHoyer/mithril-node-render) and 
