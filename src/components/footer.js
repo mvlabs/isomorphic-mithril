@@ -1,8 +1,9 @@
 import m from 'mithril'
-import t from '../translate.js'
+import t from '../translate'
+import { distPath } from '../config'
 
 const Footer = {
-  view: vnode => m('footer.footer', [
+  view: ({ attrs: va }) => m('footer.footer', [
     m('.container', [
       m('.columns.is-desktop.reverse-row-order', [
         m('.column.is-three-quarters-desktop.has-text-right-desktop', [
@@ -27,14 +28,14 @@ const Footer = {
             rel: 'noopener noreferrer',
             title: 'MV Labs'
           }, m('img.va-mid', {
-            src: '/dist/img/mv-logo.png',
+            src: `${distPath}/mv-logo.png`,
             alt: 'MV Labs',
             width: '100'
           }))
         ]),
         m('.column', [
           m('a', {
-            href: '/' + vnode.attrs.globals.activeLanguage + '/admin',
+            href: '/' + va.globals.activeLanguage + '/admin',
             oncreate: m.route.link
           }, t('footer.admin_area'))
         ])

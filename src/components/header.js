@@ -3,8 +3,8 @@ import LanguagePicker from './language-picker.js'
 import t from '../translate.js'
 
 export default {
-  oninit: vnode => {
-    vnode.state.isAuth = vnode.attrs.fetcher.isAuth()
+  oninit: ({ attrs: va, state: vs }) => {
+    vs.isAuth = va.fetcher.isAuth()
   },
 
   oncreate: () => {
@@ -26,11 +26,11 @@ export default {
     }
   },
 
-  view: vnode => m('nav.navbar.is-primary', [
+  view: ({ attrs: va, state: vs }) => m('nav.navbar.is-primary', [
     m('.container', [
       m('.navbar-brand', [
         m('a.navbar-item', {
-          href: `/${vnode.attrs.globals.activeLanguage}/`,
+          href: `/${va.globals.activeLanguage}/`,
           oncreate: m.route.link
         }, t('header.title')),
         m('.navbar-burger.burger[data-target="navbar-menu"]', [
@@ -52,15 +52,15 @@ export default {
             'Github'
           ]),
           m(LanguagePicker, {
-            globals: vnode.attrs.globals,
-            slug: vnode.attrs.slug,
-            isSection: vnode.attrs.isSection === true
+            globals: va.globals,
+            slug: va.slug,
+            isSection: va.isSection === true
           }),
-          vnode.state.isAuth ? m('a.navbar-item', {
+          vs.isAuth ? m('a.navbar-item', {
             href: '#',
             onclick (e) {
               e.preventDefault()
-              vnode.attrs.fetcher.logout()
+              va.fetcher.logout()
             }
           }, t('login.logout')) : null
         ])

@@ -7,75 +7,73 @@ import LoadingDots from '../components/loading-dots.js'
 import Menu from '../components/menu.js'
 import t from '../translate.js'
 
-let vm
-
 export default {
-  oninit: vnode => new Promise((resolve) => {
-    vm = componentInit(vnode)
-    vm.slug = 'admin'
-    vm.title = t('admin.admin')
+  oninit: ({ attrs: va, state: vs }) => new Promise((resolve) => {
+    vs.vm = componentInit(va)
+    vs.vm.slug = 'admin'
+    vs.vm.title = t('admin.admin')
     const statePrefix = 'admin'
 
-    if (!vm.stateman.get(statePrefix + '.userData')) {
-      vnode.state.loading = true
-      vm.fetcher.getUserData()
+    if (!vs.vm.stateman.get(statePrefix + '.userData')) {
+      vs.loading = true
+      vs.vm.fetcher.getUserData()
         .then((data) => {
-          vm.userData = data
-          vm.stateman.set(statePrefix + '.userData', data)
-          vnode.state.loading = false
+          vs.vm.userData = data
+          vs.vm.stateman.set(statePrefix + '.userData', data)
+          vs.loading = false
           m.redraw()
           resolve()
         })
         .catch((err) => {
-          vm.error = err
+          vs.vm.error = err
           m.redraw()
           resolve()
         })
     } else {
-      vm.userData = vm.stateman.get(statePrefix + '.userData')
+      vs.vm.userData = vs.vm.stateman.get(statePrefix + '.userData')
       resolve()
     }
   }),
 
-  view: vnode => m(Layout, vm, m('.wrap', [
-    m(Header, vm),
+  view: ({ attrs: va, state: vs }) => m(Layout, vs.vm, m('.wrap', [
+    m(Header, vs.vm),
     m('main.main.section', m('.container', m('.columns.is-desktop.reverse-row-order', [
       m('.column.is-three-quarters-desktop.content', [
         m('h1', t('admin.admin')),
-        vm.error ? m('.alert.alert-warning', [
+        vs.vm.error ? m('.alert.alert-warning', [
           t('admin.not_authorized') + '. ',
           m('a', {
-            href: '/' + vm.globals.activeLanguage + '/login',
+            href: '/' + vs.vm.globals.activeLanguage + '/login',
             oncreate: m.route.link
           }, t('login.login'))
-        ]) : vnode.state.loading ? m(LoadingDots) : [
+        ]) : vs.loading ? m(LoadingDots) : [
           m('p', [
             t('admin.welcome_back') + ', ',
-            m('strong', vm.userData.name.title + ' ' + vm.userData.name.first + ' ' + vm.userData.name.last),
+            m('strong', vs.vm.userData.name.title + ' ' + vs.vm.userData.name.first + ' ' + vs.vm.userData.name.last),
             '. ',
             m('button.button.is-small', {
-              onclick: vm.fetcher.logout
+              onclick: vs.vm.fetcher.logout
             }, t('login.logout'))
           ]),
           m('table.table', [
             m('tr', [
               m('th', 'profile picture'),
               m('td', m('img', {
-                src: vm.userData.picture.large
+                src: vs.vm.userData.picture.large
               }))
             ]),
             m('tr', [
               m('th', 'first name'),
-              m('td', vm.userData.name.first)
+              m('td', vs.vm.userData.name.first)
             ]),
             m('tr', [
               m('th', 'last name'),
-              m('td', vm.userData.name.last)
+              m('td', vs.vm.userData.name.last)
             ]),
             m('tr', [
               m('th', 'location'),
               m('td', [
-                vm.userData.location.street + ', ' + vm.userData.location.postcode + ' ' + vm.userData.location.city + ', ' + vm.userData.location.state
+                vs.vm.userData.location.street + ', ' + vs.vm.userData.location.postcode + ' ' + vs.vm.userData.location.city + ', ' + vs.vm.userData.location.state
               ])
             ]),
             m('tr', [
@@ -84,21 +82,21 @@ export default {
             ]),
             m('tr', [
               m('th', 'email'),
-              m('td', vm.userData.email)
+              m('td', vs.vm.userData.email)
             ]),
             m('tr', [
               m('th', 'phone'),
-              m('td', vm.userData.phone)
+              m('td', vs.vm.userData.phone)
             ]),
             m('tr', [
               m('th', 'cell'),
-              m('td', vm.userData.cell)
+              m('td', vs.vm.userData.cell)
             ])
           ])
         ]
       ]),
-      m(Menu, vm)
+      m(Menu, vs.vm)
     ]))),
-    m(Footer, vm)
+    m(Footer, vs.vm)
   ]))
 }

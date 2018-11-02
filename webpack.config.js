@@ -57,6 +57,11 @@ const config = {
           },
           'sass-loader'
         ]
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg|ico)$/i,
+        include: path.resolve(__dirname, 'src/img'),
+        loader: 'file-loader?name=[name].[ext]'
       }
     ]
   },

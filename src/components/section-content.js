@@ -7,8 +7,8 @@ export default {
     Prism.highlightAll()
   },
 
-  view: vnode => [
-    vnode.attrs.content,
-    m(EditButton, { activeLanguage: vnode.attrs.activeLanguage, section: vnode.attrs.slug })
+  view: ({ attrs: va }) => [
+    va.content,
+    m(EditButton, { activeLanguage: va.activeLanguage, section: va.slug })
   ]
 }

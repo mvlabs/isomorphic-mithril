@@ -1,10 +1,11 @@
 import m from 'mithril'
-import componentInit from '../componentInit.js'
+import componentInit from '../componentInit'
 import Footer from '../components/footer'
 import Header from '../components/header'
 import Layout from '../components/layout'
 import Menu from '../components/menu'
-import t from '../translate.js'
+import t from '../translate'
+import { distPath } from '../config'
 
 export default {
   oninit: ({ attrs: va, state: vs }) => {
@@ -23,7 +24,7 @@ export default {
       m('.column.is-three-quarters-desktop.content', [
         m('h1', t('error.error') + ' ' + vs.vm.error.status + ': ' + vs.errorMessage),
         m('p.text-center', m('img.img-fluid', {
-          src: `/assets/img/${vs.vm.error.status}.jpg`,
+          src: `${distPath}/${vs.vm.error.status}.jpg`,
           alt: `${vs.vm.error.status} error`
         }))
       ]),

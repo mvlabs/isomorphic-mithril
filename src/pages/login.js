@@ -10,61 +10,59 @@ const withKey = (callback) => (e) => {
   if (e.keyCode === 13) callback()
 }
 
-let vm
-
 export default {
-  oninit: vnode => {
-    vm = componentInit(vnode)
-    vm.slug = 'login'
-    vm.title = t('login.login')
+  oninit: ({ attrs: va, state: vs }) => {
+    vs.vm = componentInit(va)
+    vs.vm.slug = 'login'
+    vs.vm.title = t('login.login')
 
-    vnode.state.loginForm = {}
-    vnode.state.loginForm.email = 'elijah.scott@example.com'
-    vnode.state.loginForm.password = 'secretpassword'
-    vnode.state.error = null
-    vnode.state.loading = false
+    vs.loginForm = {}
+    vs.loginForm.email = 'elijah.scott@example.com'
+    vs.loginForm.password = 'secretpassword'
+    vs.error = null
+    vs.loading = false
 
-    vnode.state.submit = () => {
-      if (!vnode.state.loginForm.email || !vnode.state.loginForm.password) return
-      vnode.state.loading = true
-      vm.fetcher.login(vnode.state.loginForm.email, vnode.state.loginForm.password)
+    vs.submit = () => {
+      if (!vs.loginForm.email || !vs.loginForm.password) return
+      vs.loading = true
+      vs.vm.fetcher.login(vs.loginForm.email, vs.loginForm.password)
         .then((response) => {
           if (response.error) {
-            vnode.state.error = response.error
-            vnode.state.loginForm.password = ''
-            vnode.state.loading = false
+            vs.error = response.error
+            vs.loginForm.password = ''
+            vs.loading = false
             m.redraw()
           } else {
-            m.route.set('/' + vm.globals.activeLanguage + '/admin')
+            m.route.set('/' + vs.vm.globals.activeLanguage + '/admin')
           }
         })
         .catch((err) => {
-          vnode.state.loading = false
-          vnode.state.error = err
+          vs.loading = false
+          vs.error = err
         })
     }
   },
 
-  view: vnode => m(Layout, vm, m('.wrap', [
-    m(Header, vm),
+  view: ({ attrs: va, state: vs }) => m(Layout, vs.vm, m('.wrap', [
+    m(Header, vs.vm),
     m('main.main.section', m('.container', m('.columns.is-desktop.reverse-row-order', [
       m('.column.is-three-quarters-desktop.content', [
         m('h1', t('login.login')),
         m('form.login-form.', [
-          vnode.state.error ? m('p.alert.alert-danger', m('strong', vnode.state.error.message)) : null,
+          vs.error ? m('p.alert.alert-danger', m('strong', vs.error.message)) : null,
           m('label.mb2', {
             for: 'login-email',
             autocomplete: 'login-email'
           }, t('login.email_address')),
           m('.control', [
             m('input.input', {
-              oninput: m.withAttr('value', (val) => { vnode.state.loginForm.email = val }),
-              value: vnode.state.loginForm.email,
+              oninput: m.withAttr('value', (val) => { vs.loginForm.email = val }),
+              value: vs.loginForm.email,
               id: 'login-email',
               type: 'email',
               required: true,
               autofocus: true,
-              onkeypress: withKey(vnode.state.submit)
+              onkeypress: withKey(vs.submit)
             })
           ]),
           m('label.mb2', {
@@ -73,24 +71,24 @@ export default {
           }, t('login.password')),
           m('.control', [
             m('input.input', {
-              oninput: m.withAttr('value', (val) => { vnode.state.loginForm.password = val }),
-              value: vnode.state.loginForm.password,
+              oninput: m.withAttr('value', (val) => { vs.loginForm.password = val }),
+              value: vs.loginForm.password,
               id: 'login-password',
               type: 'password',
               required: true,
-              onkeypress: withKey(vnode.state.submit)
+              onkeypress: withKey(vs.submit)
             })
           ]),
-          m('.actions', vnode.state.loading ? m('button.btn.btn-primary.btn-block.btn-lg.text-uppercase', {
+          m('.actions', vs.loading ? m('button.btn.btn-primary.btn-block.btn-lg.text-uppercase', {
             type: 'button'
           }, m('i.fa.fa-spinner.fa-pulse')) : m('button.button.is-primary.is-uppercase.mt2', {
             type: 'button',
-            onclick: vnode.state.submit
+            onclick: vs.submit
           }, t('login.login')))
         ])
       ]),
-      m(Menu, vm)
+      m(Menu, vs.vm)
     ]))),
-    m(Footer, vm)
+    m(Footer, vs.vm)
   ]))
 }

@@ -5,6 +5,8 @@ const productionSiteURL = 'https://isomorphic-mithril.mvlabs.it'
 
 const dateISOFormat = 'YYYY-MM-DD'
 
+const distPath = '/dist'
+
 const gtmID = process.env.NODE_ENV === 'production'
   ? 'UA-23409117-16'
   : null
@@ -19,6 +21,7 @@ const xhrConfig = (xhr) => {
 
 export {
   dateISOFormat,
+  distPath,
   gtmID,
   siteURL,
   xhrConfig

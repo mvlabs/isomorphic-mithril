@@ -8,7 +8,13 @@ import stateManager from './stateman.js'
 import resources from './resources.js'
 import store from 'store'
 import t from './translate.js'
+
 import './scss/style.scss'
+import './img/favicon.ico'
+import './img/mv-logo.png'
+import './img/flag-en.png'
+import './img/flag-it.png'
+import './img/404.jpg'
 
 const sharedState = window.__preloadedState || {}
 
