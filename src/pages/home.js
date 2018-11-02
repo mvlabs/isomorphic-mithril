@@ -1,5 +1,5 @@
 import m from 'mithril'
-import he from 'he'
+import decodeHTML from 'decode-html'
 import componentInit from '../componentInit.js'
 import EditButton from '../components/edit-button.js'
 import Footer from '../components/footer.js'
@@ -31,7 +31,7 @@ const Home = {
           resolve()
         })
     } else {
-      vs.vm.section.content = m.trust(he.decode(vs.vm.stateman.get(statePrefix + '.content')))
+      vs.vm.section.content = m.trust(decodeHTML(vs.vm.stateman.get(statePrefix + '.content')))
       resolve()
     }
   }),

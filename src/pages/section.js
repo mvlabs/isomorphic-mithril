@@ -1,7 +1,7 @@
 import m from 'mithril'
 import componentInit from '../componentInit.js'
 import Footer from '../components/footer'
-import he from 'he'
+import decodeHTML from 'decode-html'
 import Header from '../components/header.js'
 import LoadingDots from '../components/loading-dots'
 import Layout from '../components/layout'
@@ -49,7 +49,7 @@ export default {
                 resolve()
               })
           } else {
-            vs.vm.section.content = m.trust(he.decode(vs.vm.stateman.get(statePrefix + '.content')))
+            vs.vm.section.content = m.trust(decodeHTML(vs.vm.stateman.get(statePrefix + '.content')))
             resolve()
           }
         }),

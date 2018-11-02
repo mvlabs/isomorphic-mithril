@@ -1,4 +1,5 @@
 // const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // const ReloadServerPlugin = require('reload-server-webpack-plugin')
 const autoprefixer = require('autoprefixer')
@@ -70,6 +71,9 @@ const config = {
     },
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].css'
+    }),
+    new BundleAnalyzerPlugin({
+      openAnalyzer: false
     })
   ],
   devtool: 'cheap-module-source-map',
