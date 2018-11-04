@@ -1,0 +1,5 @@
+import './img/favicon.ico'
+import './img/mv-logo.png'
+import './img/flag-en.png'
+import './img/flag-it.png'
+import './img/404.jpg'

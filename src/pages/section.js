@@ -5,6 +5,7 @@ import LoadingDots from '../components/loading-dots'
 import Wrapper from '../components/wrapper'
 import SectionContent from '../components/section-content'
 import NotFound from './notfound'
+import { decode } from '../lib/decode-markdown'
 
 export default {
   onmatch: (attrs, requestedPath) => {
@@ -37,6 +38,7 @@ export default {
           } else {
             vs.loading = true
             va.app.fetcher.getSection(vs.page.slug)
+              .then(decode)
               .then(content => {
                 vs.page.content = m.trust(content)
                 va.app.state.set(`${statePrefix}.content`, content)

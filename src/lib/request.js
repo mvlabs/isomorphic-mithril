@@ -1,15 +1,17 @@
 import m from 'mithril'
 
-const request = (options) => {
-  const args = Object.assign({}, options, { extract: (xhr) => {
+const request = options => {
+  const args = Object.assign({}, options, { extract: xhr => {
     const isJSON = xhr.getResponseHeader('Content-Type').indexOf('application/json') !== -1
     if (xhr.status >= 400) {
-      throw new Object({
+      throw Object({
         status: xhr.status,
         message: xhr.statusText
       })
     } else {
-      return isJSON ? JSON.parse(xhr.responseText) : xhr.responseText
+      return isJSON
+        ? JSON.parse(xhr.responseText)
+        : xhr.responseText
     }
   } })
   return m.request(args)

@@ -6,29 +6,26 @@ import m from 'mithril'
 import routes from './routes'
 import stateman from './stateman'
 import resources from './resources'
+import { decode } from './lib/decode-markdown'
 import i18n from './lib/i18n'
-
+// Styles
 import './scss/style.scss'
-import './img/favicon.ico'
-import './img/mv-logo.png'
-import './img/flag-en.png'
-import './img/flag-it.png'
-import './img/404.jpg'
+// Static assets
+import './assets'
 
 const sharedState = window.__preloadedState || {}
 
 // Get src state from server shared state
 const state = stateman(Object.assign({}, sharedState))
 const activeLanguage = state.get('activeLanguage') || 'en'
-const fetcher = Object.create(resources)
-fetcher.init(activeLanguage)
+const fetcher = resources(activeLanguage)
 
 const clientRoutes = {}
 
 const getSections = () => state.get('sections')
   ? Promise.resolve()
   : fetcher.getSections()
-    .then(sections => { state.set('sections', sections) })
+    .then(sections => { state.set('sections', decode(sections)) })
 
 getSections()
   .then(() => fetcher.getTranslations())

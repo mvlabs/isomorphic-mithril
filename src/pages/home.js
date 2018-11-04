@@ -5,6 +5,7 @@ import Layout from '../components/layout'
 import LoadingDots from '../components/loading-dots'
 import Wrapper from '../components/wrapper'
 import NotFound from './notfound'
+import { decode } from '../lib/decode-markdown'
 
 const Home = {
   oninit: ({ attrs: va, state: vs }) => new Promise(resolve => {
@@ -18,7 +19,8 @@ const Home = {
     if (!pageContent) {
       vs.loading = true
       va.app.fetcher.getSection('index')
-        .then((content) => {
+        .then(decode)
+        .then(content => {
           vs.page.content = m.trust(content)
           va.app.state.set(statePrefix + '.content', content)
           vs.loading = false

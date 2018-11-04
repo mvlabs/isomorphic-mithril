@@ -1,6 +1,3 @@
-// UTILITIES
-// ==============================================================
-
 import languages from '../../docs/languages.json'
 
 // Middleware to check languages

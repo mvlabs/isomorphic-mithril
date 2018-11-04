@@ -52,8 +52,7 @@ getBuildHashes()
           hashes,
           sections
         })
-        const fetcher = Object.create(resources)
-        fetcher.init(activeLanguage, req.cookies)
+        const fetcher = resources(activeLanguage, req.cookies)
         const t = i18n(translations[activeLanguage])
 
         const attrs = Object.assign({}, req.params, req.query, {
