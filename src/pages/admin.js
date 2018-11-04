@@ -4,23 +4,22 @@ import Header from '../components/header'
 import Wrapper from '../components/wrapper'
 import LoadingDots from '../components/loading-dots'
 import Menu from '../components/menu'
-import t from '../lib/translate'
 
 export default {
   oninit: ({ attrs: va, state: vs }) => new Promise(resolve => {
-    vs.slug = 'admin'
     vs.page = {
-      title: t('admin.admin')
+      slug: 'admin',
+      title: va.app.t('admin.admin')
     }
     const statePrefix = 'admin'
 
-    vs.userData = va.app.stateman.get(`${statePrefix}.userData`)
+    vs.userData = va.app.state.get(`${statePrefix}.userData`)
     if (!vs.userData) {
       vs.loading = true
       va.app.fetcher.getUserData()
         .then(data => {
           vs.userData = data
-          va.app.stateman.set(`${statePrefix}.userData`, data)
+          va.app.state.set(`${statePrefix}.userData`, data)
           vs.loading = false
           resolve()
         })
@@ -37,25 +36,25 @@ export default {
   }, m('.wrap', [
     m(Header, {
       app: va.app,
-      slug: vs.slug
+      page: vs.page
     }),
     m('main.main.section', m('.container', m('.columns.is-desktop.reverse-row-order', [
       m('.column.is-three-quarters-desktop.content', [
-        m('h1', t('admin.admin')),
+        m('h1', va.app.t('admin.admin')),
         vs.error ? m('.alert.alert-warning', [
-          `${t('admin.not_authorized')}. `,
+          `${va.app.t('admin.not_authorized')}. `,
           m('a', {
             href: `/${va.app.activeLanguage}/login`,
             oncreate: m.route.link
-          }, t('login.login'))
+          }, va.app.t('login.login'))
         ]) : vs.loading ? m(LoadingDots) : [
           m('p', [
-            `${t('admin.welcome_back')}, `,
+            `${va.app.t('admin.welcome_back')}, `,
             m('strong', `${vs.userData.name.title} ${vs.userData.name.first} ${vs.userData.name.last}`),
             '. ',
             m('button.button.is-small', {
               onclick: va.app.fetcher.logout
-            }, t('login.logout'))
+            }, va.app.t('login.logout'))
           ]),
           m('table.table', [
             m('tr', [
@@ -99,12 +98,12 @@ export default {
       ]),
       m(Menu, {
         app: va.app,
-        slug: vs.slug
+        page: vs.page
       })
     ]))),
     m(Footer, {
       app: va.app,
-      slug: vs.slug
+      page: vs.page
     })
   ]))
 }

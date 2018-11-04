@@ -1,8 +1,6 @@
 import m from 'mithril'
-
-// const t = require('../translate')
+import serialize from 'serialize-javascript'
 import { setHead } from '../lib/head'
-
 import { gtmID } from '../config'
 
 // SERVER SIDE LAYOUT
@@ -12,7 +10,8 @@ const Wrapper = {
       app: va.app,
       page: va.page
     })
-    vs.hashes = va.app.stateman.get('hashes')
+    vs.hashes = va.app.state.get('hashes')
+    vs.sharedState = serialize(va.app.state.getState())
   },
 
   view: ({ attrs: va, children, state: vs }) => [
@@ -29,7 +28,7 @@ const Wrapper = {
       ]),
       m('body', [
         children,
-        m('script', `window.__preloadedState = ${va.app.stateman._getString()}`),
+        m('script', `window.__preloadedState = ${vs.sharedState}`),
         m('script', { src: `/dist/app.${vs.hashes.js}.js` }),
         m('script', { src: `/dist/app.${vs.hashes.js}.js` }),
         m('script', { src: `/dist/vendors~app.${vs.hashes.jsVendors}.js` }),

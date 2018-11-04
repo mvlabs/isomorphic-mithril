@@ -7,7 +7,6 @@ import SectionContent from '../components/section-content'
 import NotFound from './notfound'
 
 export default {
-  // trololol
   onmatch: (attrs, requestedPath) => {
     const slug = requestedPath.substr(requestedPath.lastIndexOf('/') + 1)
     if (slug === 'index') {
@@ -19,28 +18,28 @@ export default {
     } else {
       return {
         oninit: ({ attrs: va, state: vs }) => new Promise(resolve => {
-          vs.page = {}
-          vs.slug = va.key
-          vs.isSection = true
-          const statePrefix = `section.${vs.slug}.${va.app.activeLanguage}`
+          vs.page = {
+            slug: va.key
+          }
+          const statePrefix = `section.${vs.page.slug}.${va.app.activeLanguage}`
 
-          vs.sections = va.app.stateman.get('sections')
+          vs.sections = va.app.state.get('sections')
           vs.sections.map(section => {
-            if (section.slug === vs.slug) {
+            if (section.slug === vs.page.slug) {
               vs.page.title = section.title
               vs.page.description = section.description
             }
           })
 
-          const pageContent = va.app.stateman.get(`${statePrefix}.content`)
+          const pageContent = va.app.state.get(`${statePrefix}.content`)
           if (pageContent) {
             vs.page.content = m.trust(decodeHTML(pageContent))
           } else {
             vs.loading = true
-            va.app.fetcher.getSection(vs.slug)
+            va.app.fetcher.getSection(vs.page.slug)
               .then(content => {
                 vs.page.content = m.trust(content)
-                va.app.stateman.set(`${statePrefix}.content`, content)
+                va.app.state.set(`${statePrefix}.content`, content)
                 vs.loading = false
                 resolve()
               })
@@ -58,15 +57,15 @@ export default {
             page: vs.page
           }, m(Layout, {
             app: va.app,
-            slug: vs.slug
+            isSection: true,
+            page: vs.page
           }, [
             vs.loading || !vs.page.content
               ? m(LoadingDots)
               : m(SectionContent, {
                 app: va.app,
-                content: vs.page.content,
-                slug: vs.slug
-              })
+                page: vs.page
+              }, vs.page.content)
           ]))
         }
       }

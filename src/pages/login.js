@@ -3,7 +3,6 @@ import Footer from '../components/footer'
 import Header from '../components/header'
 import Wrapper from '../components/wrapper'
 import Menu from '../components/menu'
-import t from '../lib/translate'
 
 const withKey = callback => e => {
   if (e.keyCode === 13) callback()
@@ -12,9 +11,9 @@ const withKey = callback => e => {
 export default {
   oninit: ({ attrs: va, state: vs }) => {
     vs.page = {
-      title: t('login.login')
+      slug: 'login',
+      title: va.app.t('login.login')
     }
-    vs.slug = 'login'
     vs.loginForm = {
       email: 'elijah.scott@example.com',
       password: 'secretpassword'
@@ -48,17 +47,17 @@ export default {
   }, m('.wrap', [
     m(Header, {
       app: va.app,
-      slug: vs.slug
+      page: vs.page
     }),
     m('main.main.section', m('.container', m('.columns.is-desktop.reverse-row-order', [
       m('.column.is-three-quarters-desktop.content', [
-        m('h1', t('login.login')),
+        m('h1', va.app.t('login.login')),
         m('form.login-form.', [
           vs.error ? m('p.alert.alert-danger', m('strong', vs.error.message)) : null,
           m('label.mb2', {
             for: 'login-email',
             autocomplete: 'login-email'
-          }, t('login.email_address')),
+          }, va.app.t('login.email_address')),
           m('.control', [
             m('input.input', {
               oninput: m.withAttr('value', val => { vs.loginForm.email = val }),
@@ -73,7 +72,7 @@ export default {
           m('label.mb2', {
             for: 'login-password',
             autocomplete: 'login-password'
-          }, t('login.password')),
+          }, va.app.t('login.password')),
           m('.control', [
             m('input.input', {
               oninput: m.withAttr('value', val => { vs.loginForm.password = val }),
@@ -91,17 +90,17 @@ export default {
             : m('button.button.is-primary.is-uppercase.mt2', {
               type: 'button',
               onclick: vs.submit
-            }, t('login.login')))
+            }, va.app.t('login.login')))
         ])
       ]),
       m(Menu, {
         app: va.app,
-        slug: vs.slug
+        page: vs.page
       })
     ]))),
     m(Footer, {
       app: va.app,
-      slug: vs.slug
+      page: vs.page
     })
   ]))
 }

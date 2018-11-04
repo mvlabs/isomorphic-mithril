@@ -7,17 +7,9 @@ const options = {
   resolveAliases: false // [Boolean]: Parses all translations for aliases and replaces them, if `true`.
 }
 
-let messages = {}
-
-const translate = (key, args) => {
+const i18n = messages => (key, args) => {
   const t = translatejs(messages, options)
   return args ? m.trust(t(key, args)) : t(key)
 }
 
-translate.init = (data) => {
-  if (data) messages = data
-}
-
-translate.getTranslations = () => messages
-
-export default translate
+export default i18n

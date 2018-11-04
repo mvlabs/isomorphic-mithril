@@ -1,5 +1,4 @@
 import m from 'mithril'
-import t from '../lib/translate'
 import { distPath } from '../config'
 
 const Footer = {
@@ -7,21 +6,21 @@ const Footer = {
     m('.container', [
       m('.columns.is-desktop.reverse-row-order', [
         m('.column.is-three-quarters-desktop.has-text-right-desktop', [
-          t('footer.project_by') + ' ',
+          `${va.app.t('footer.project_by')} `,
           m('a', {
             href: 'http://www.acxwebdesign.com/',
             target: '_blank',
             rel: 'noopener noreferrer',
             title: 'ACX webdesign'
           }, 'Andrea Coiutti'),
-          ' ' + t('footer.and') + ' ',
+          ` ${va.app.t('footer.and')} `,
           m('a', {
             href: 'https://twitter.com/lucamonfredo',
             target: '_blank',
             rel: 'noopener noreferrer',
             title: 'Luca Monfredo'
           }, 'Luca Monfredo'),
-          ' · ' + t('footer.powered_by') + ' ',
+          ` · ${va.app.t('footer.powered_by')} `,
           m('a', {
             href: 'http://mvlabs.it/',
             target: '_blank',
@@ -37,7 +36,7 @@ const Footer = {
           m('a', {
             href: '/' + va.app.activeLanguage + '/admin',
             oncreate: m.route.link
-          }, t('footer.admin_area'))
+          }, va.app.t('footer.admin_area'))
         ])
       ])
     ])

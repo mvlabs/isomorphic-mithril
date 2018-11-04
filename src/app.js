@@ -4,9 +4,9 @@
 import m from 'mithril'
 
 import routes from './routes'
-import stateManager from './stateman'
+import stateman from './stateman'
 import resources from './resources'
-import t from './lib/translate'
+import i18n from './lib/i18n'
 
 import './scss/style.scss'
 import './img/favicon.ico'
@@ -18,24 +18,23 @@ import './img/404.jpg'
 const sharedState = window.__preloadedState || {}
 
 // Get src state from server shared state
-const stateman = Object.create(stateManager)
-stateman.init(Object.assign({}, sharedState))
-const activeLanguage = stateman.get('activeLanguage') || 'en'
+const state = stateman(Object.assign({}, sharedState))
+const activeLanguage = state.get('activeLanguage') || 'en'
 const fetcher = Object.create(resources)
 fetcher.init(activeLanguage)
 
 const clientRoutes = {}
 
-fetcher.getTranslations()
-  .then(messages => {
-    t.init(messages)
-    return stateman.get('sections')
-      ? Promise.resolve()
-      : fetcher.getSections()
-        .then(sections => { stateman.set('sections', sections) })
-  })
-  .then(() => {
-    const app = { activeLanguage, fetcher, stateman }
+const getSections = () => state.get('sections')
+  ? Promise.resolve()
+  : fetcher.getSections()
+    .then(sections => { state.set('sections', sections) })
+
+getSections()
+  .then(() => fetcher.getTranslations())
+  .then(translations => {
+    const t = i18n(translations)
+    const app = { activeLanguage, fetcher, state, t }
     Object.keys(routes).forEach(route => {
       clientRoutes[route] = {
         onmatch: (attrs, requestedPath) => {

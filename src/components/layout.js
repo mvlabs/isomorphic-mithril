@@ -7,18 +7,19 @@ export default {
   view: ({ attrs: va, children }) => m('.wrap', [
     m(Header, {
       app: va.app,
-      slug: va.slug
+      isSection: va.isSection,
+      page: va.page
     }),
     m('main.main.section', m('.container', m('.columns.is-desktop.reverse-row-order', [
       m('.column.is-three-quarters-desktop.content', children),
       m(Menu, {
         app: va.app,
-        slug: va.slug
+        page: va.page
       })
     ]))),
     m(Footer, {
       app: va.app,
-      slug: va.slug
+      page: va.page
     })
   ])
 }

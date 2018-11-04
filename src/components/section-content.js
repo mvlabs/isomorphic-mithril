@@ -7,11 +7,11 @@ export default {
     Prism.highlightAll()
   },
 
-  view: ({ attrs: va }) => [
-    va.content,
+  view: ({ attrs: va, children }) => [
+    children,
     m(EditButton, {
       app: va.app,
-      slug: va.slug
+      page: va.page
     })
   ]
 }

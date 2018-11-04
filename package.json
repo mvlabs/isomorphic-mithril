@@ -15,9 +15,9 @@
   "scripts": {
     "start": "npm run clean && npm run watchall",
     "watch": "webpack --mode=development --watch --config webpack.config.js",
-    "watchall": "concurrently \"nodemon --config nodemon.json\" \"npm run watch\"",
-    "build": "webpack --mode=production --config webpack.config.js",
-    "production": "node index.js",
+    "watchall": "concurrently \"nodemon --config nodemon.json server.js\" \"npm run watch\"",
+    "build": "npm run clean && webpack --mode=production --config webpack.config.js",
+    "production": "node server.js",
     "clean": "rimraf dist/*"
   },
   "dependencies": {
@@ -40,6 +40,7 @@
     "nodemon": "^1.18.5",
     "prismjs": "^1.15.0",
     "rimraf": "^2.6.2",
+    "serialize-javascript": "^1.5.0",
     "store": "^2.0.12",
     "string-hash": "^1.1.3",
     "tachyons": "^4.11.1",

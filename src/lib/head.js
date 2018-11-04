@@ -1,10 +1,8 @@
-import t from './translate'
-
-const setHead = attrs => {
+const setHead = va => {
   const head = {}
-  head.title = `${attrs.page.title || '[MISSING TITLE]'} · `
-  head.title += t('header.title')
-  head.description = attrs.page.description
+  head.title = `${va.page.title || '[MISSING TITLE]'} · `
+  head.title += va.app.t('header.title')
+  head.description = va.page.description
   return head
 }
 

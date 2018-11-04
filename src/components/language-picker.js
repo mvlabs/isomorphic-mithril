@@ -14,7 +14,7 @@ export default {
       va.app.activeLanguage
     ]),
     m('.navbar-dropdown', languages.map(language => language.slug !== va.app.activeLanguage && m('a.navbar-item', {
-      href: `/${language.slug}/${va.slug === 'index' ? '' : (va.isSection ? 'sections/' : '') + va.slug}`
+      href: `/${language.slug}/${va.page.slug === 'index' ? '' : (va.isSection ? 'sections/' : '') + va.page.slug}`
     }, [
       m('img.switch-lang-flag', {
         src: `${distPath}/flag-${language.slug}.png`,

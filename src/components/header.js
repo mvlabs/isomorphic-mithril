@@ -1,6 +1,5 @@
 import m from 'mithril'
 import LanguagePicker from './language-picker'
-import t from '../lib/translate'
 
 export default {
   oninit: ({ attrs: va, state: vs }) => {
@@ -32,7 +31,7 @@ export default {
         m('a.navbar-item', {
           href: `/${va.app.activeLanguage}/`,
           oncreate: m.route.link
-        }, t('header.title')),
+        }, va.app.t('header.title')),
         m('.navbar-burger.burger[data-target="navbar-menu"]', [
           m('span'),
           m('span'),
@@ -53,8 +52,8 @@ export default {
           ]),
           m(LanguagePicker, {
             app: va.app,
-            slug: va.slug,
-            isSection: va.isSection === true
+            page: va.page,
+            isSection: va.isSection
           }),
           vs.isAuth ? m('a.navbar-item', {
             href: '#',
@@ -62,7 +61,7 @@ export default {
               e.preventDefault()
               va.app.fetcher.logout()
             }
-          }, t('login.logout')) : null
+          }, va.app.t('login.logout')) : null
         ])
       ])
     ])

@@ -12,8 +12,8 @@ import m from 'mithril'
 import path from 'path'
 import resources from '../resources'
 import routes from '../routes'
-import stateManager from '../stateman'
-import t from '../lib/translate'
+import stateman from '../stateman'
+import i18n from '../lib/i18n'
 import toHTML from 'mithril-node-render'
 import user from './user'
 import toc from './toc'
@@ -47,19 +47,17 @@ getBuildHashes()
         const sections = toc[activeLanguage]
 
         // Istantiate a new state at every request
-        const stateman = Object.create(stateManager)
-        stateman.init({
+        const state = stateman({
           activeLanguage,
           hashes,
           sections
         })
-
-        t.init(translations[activeLanguage])
         const fetcher = Object.create(resources)
         fetcher.init(activeLanguage, req.cookies)
+        const t = i18n(translations[activeLanguage])
 
         const attrs = Object.assign({}, req.params, req.query, {
-          app: { activeLanguage, fetcher, res, stateman, url: req.url }
+          app: { activeLanguage, fetcher, res, state, t, url: req.url }
         })
 
         Promise.resolve()
@@ -81,4 +79,3 @@ getBuildHashes()
       console.log('\x1b[35m%s\x1b[0m', `[SSR] Listening on localhost:${port}...`)
     })
   })
-

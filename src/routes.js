@@ -25,12 +25,12 @@ const plainRoutes = {
 // Build the complete routes tree for all the languages
 const routes = {}
 routes['/'] = Home
-allowedLanguages.map((language) => {
-  Object.keys(plainRoutes).forEach((route) => {
-    routes['/' + language + route] = plainRoutes[route]
+allowedLanguages.forEach(language => {
+  Object.keys(plainRoutes).forEach(route => {
+    routes[`/${language}${route}`] = plainRoutes[route]
   })
 })
-// Template for 404 errors
+// Catchall route for 404 error
 routes['/:other'] = NotFound
 
 export default routes
