@@ -7,6 +7,7 @@ import SectionContent from '../components/section-content'
 import NotFound from './notfound'
 
 export default {
+  // trololol
   onmatch: (attrs, requestedPath) => {
     const slug = requestedPath.substr(requestedPath.lastIndexOf('/') + 1)
     if (slug === 'index') {

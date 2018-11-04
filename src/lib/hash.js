@@ -14,11 +14,13 @@ const getHash = paths => {
 
 const getBuildHashes = () => Promise.all([
   glob('dist/app.*.css'),
-  glob('dist/app.*.js')
+  glob('dist/app.*.js'),
+  glob('dist/vendors~app.*.js')
 ])
-  .then(([cssFiles, jsFiles]) => ({
+  .then(([cssFiles, jsFiles, jeVendorsFiles]) => ({
     css: getHash(cssFiles),
-    js: getHash(jsFiles)
+    js: getHash(jsFiles),
+    jsVendors: getHash(jeVendorsFiles)
   }))
 
 export {

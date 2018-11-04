@@ -15,6 +15,11 @@ const config = {
     filename: '[name].[hash].js',
     publicPath: '/'
   },
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
+  },
   module: {
     rules: [
       {
