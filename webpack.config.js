@@ -1,20 +1,14 @@
-// const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-// const ReloadServerPlugin = require('reload-server-webpack-plugin')
 const autoprefixer = require('autoprefixer')
 const cssnano = require('cssnano')
 const path = require('path')
 const precss = require('precss')
-const rimraf = require('rimraf')
 const webpack = require('webpack')
 
-// const isProduction = process.argv.indexOf('-p') !== -1
-
 const config = {
-  mode: 'production',
   entry: {
-    app: './src/app.js'
+    app: path.resolve(__dirname, 'src/app.js')
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -71,9 +65,6 @@ const config = {
         BROWSER: JSON.stringify('true')
       }
     }),
-    function () {
-      rimraf.sync('./dist')
-    },
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].css'
     }),
@@ -83,24 +74,18 @@ const config = {
   ],
   devtool: 'cheap-module-source-map',
   devServer: {
+    index: '',
+    compress: false,
     contentBase: path.resolve(__dirname, 'dist'),
     port: 4000,
     host: '0.0.0.0',
-    disableHostCheck: true
+    disableHostCheck: true,
+    proxy: {
+      target: 'http://127.0.0.1:3000',
+      secure: false
+    }
   },
   performance: { hints: false }
 }
-
-// Development mode
-// if (!isProduction) {
-//   config.plugins.push(new ReloadServerPlugin({
-//     script: './server.js'
-//   }))
-//   config.plugins.push(new BrowserSyncPlugin({
-//     host: 'localhost',
-//     port: 4000,
-//     proxy: 'http://localhost:3000/'
-//   }))
-// }
 
 module.exports = config

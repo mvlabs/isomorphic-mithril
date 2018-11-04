@@ -1,73 +1,73 @@
 import m from 'mithril'
-import componentInit from '../componentInit.js'
-import Footer from '../components/footer'
 import decodeHTML from 'decode-html'
-import Header from '../components/header.js'
-import LoadingDots from '../components/loading-dots'
 import Layout from '../components/layout'
-import Menu from '../components/menu'
+import LoadingDots from '../components/loading-dots'
+import Wrapper from '../components/wrapper'
 import SectionContent from '../components/section-content'
-import NotFound from './notfound.js'
+import NotFound from './notfound'
 
 export default {
-  onmatch: (params, route) => {
-    const slug = route.substr(route.lastIndexOf('/') + 1)
+  onmatch: (attrs, requestedPath) => {
+    const slug = requestedPath.substr(requestedPath.lastIndexOf('/') + 1)
     if (slug === 'index') {
-      if (params.res) {
-        params.res.redirect('/')
+      if (attrs.res) {
+        attrs.res.redirect('/')
       } else {
         m.route.set('/')
       }
     } else {
       return {
-        oninit: ({ attrs: va, state: vs }) => new Promise((resolve) => {
-          vs.vm = componentInit(va)
-          vs.vm.slug = va.key
-          vs.vm.isSection = true
-          const statePrefix = 'section.' + vs.vm.slug + '.' + vs.vm.globals.activeLanguage
+        oninit: ({ attrs: va, state: vs }) => new Promise(resolve => {
+          vs.page = {}
+          vs.slug = va.key
+          vs.isSection = true
+          const statePrefix = `section.${vs.slug}.${va.app.activeLanguage}`
 
-          vs.vm.sections.map((section) => {
-            if (section.slug === vs.vm.slug) {
-              vs.vm.title = section.title
-              vs.vm.description = section.description
+          vs.sections = va.app.stateman.get('sections')
+          vs.sections.map(section => {
+            if (section.slug === vs.slug) {
+              vs.page.title = section.title
+              vs.page.description = section.description
             }
           })
 
-          if (!vs.vm.stateman.get(statePrefix + '.content')) {
-            vs.loading = true
-            vs.vm.fetcher.getSection(vs.vm.slug)
-              .then((content) => {
-                vs.vm.section.content = m.trust(content)
-                vs.vm.stateman.set(statePrefix + '.content', content)
-                vs.loading = false
-                m.redraw()
-                resolve()
-              })
-              .catch((err) => {
-                vs.vm.error = err
-                m.redraw()
-                resolve()
-              })
+          const pageContent = va.app.stateman.get(`${statePrefix}.content`)
+          if (pageContent) {
+            vs.page.content = m.trust(decodeHTML(pageContent))
           } else {
-            vs.vm.section.content = m.trust(decodeHTML(vs.vm.stateman.get(statePrefix + '.content')))
-            resolve()
+            vs.loading = true
+            va.app.fetcher.getSection(vs.slug)
+              .then(content => {
+                vs.page.content = m.trust(content)
+                va.app.stateman.set(`${statePrefix}.content`, content)
+                vs.loading = false
+                resolve()
+              })
+              .catch(err => {
+                vs.error = err
+                resolve()
+              })
           }
         }),
 
-        view: ({ attrs: va, state: vs }) => vs.vm.error ? m(NotFound, vs.vm) : m(Layout, vs.vm, m('.wrap', [
-          m(Header, vs.vm),
-          m('main.main.section', m('.container', m('.columns.is-desktop.reverse-row-order', [
-            m('.column.is-three-quarters-desktop.content', [
-              vs.loading || !vs.vm.section.content ? m(LoadingDots) : m(SectionContent, {
-                content: vs.vm.section.content,
-                activeLanguage: vs.vm.globals.activeLanguage,
-                section: vs.vm.slug
+        view: ({ attrs: va, state: vs }) => {
+          if (vs.error) return m(NotFound, { app: va.app })
+          return m(Wrapper, {
+            app: va.app,
+            page: vs.page
+          }, m(Layout, {
+            app: va.app,
+            slug: vs.slug
+          }, [
+            vs.loading || !vs.page.content
+              ? m(LoadingDots)
+              : m(SectionContent, {
+                app: va.app,
+                content: vs.page.content,
+                slug: vs.slug
               })
-            ]),
-            m(Menu, vs.vm)
-          ]))),
-          m(Footer, vs.vm)
-        ]))
+          ]))
+        }
       }
     }
   }

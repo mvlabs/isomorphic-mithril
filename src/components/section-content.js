@@ -9,6 +9,9 @@ export default {
 
   view: ({ attrs: va }) => [
     va.content,
-    m(EditButton, { activeLanguage: va.activeLanguage, section: va.slug })
+    m(EditButton, {
+      app: va.app,
+      slug: va.slug
+    })
   ]
 }

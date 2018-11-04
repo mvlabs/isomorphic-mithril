@@ -1,35 +1,46 @@
 import m from 'mithril'
-import componentInit from '../componentInit'
 import Footer from '../components/footer'
 import Header from '../components/header'
-import Layout from '../components/layout'
+import Wrapper from '../components/wrapper'
 import Menu from '../components/menu'
-import t from '../translate'
+import t from '../lib/translate'
 import { distPath } from '../config'
 
 export default {
   oninit: ({ attrs: va, state: vs }) => {
-    vs.vm = componentInit(va)
-    vs.vm.section.slug = 'notfound'
-    vs.vm.error = va.error || {
+    vs.slug = 'notfound'
+    vs.error = va.error || {
       status: 404,
       message: 'Not Found'
     }
-    vs.errorMessage = vs.vm.error.message === 'Not Found' ? t('error.not_found') : '?'
+    vs.errorMessage = vs.error.message === 'Not Found'
+      ? t('error.not_found')
+      : '?'
   },
 
-  view: ({ attrs: va, state: vs }) => m(Layout, vs.vm, m('.wrap', [
-    m(Header, vs.vm),
+  view: ({ attrs: va, state: vs }) => m(Wrapper, {
+    app: va.app
+  }, m('.wrap', [
+    m(Header, {
+      app: va.app,
+      slug: vs.slug
+    }),
     m('main.main.section', m('.container', m('.columns.is-desktop.reverse-row-order', [
       m('.column.is-three-quarters-desktop.content', [
-        m('h1', t('error.error') + ' ' + vs.vm.error.status + ': ' + vs.errorMessage),
+        m('h1', `${t('error.error')} ${vs.error.status}: ${vs.errorMessage}`),
         m('p.text-center', m('img.img-fluid', {
-          src: `${distPath}/${vs.vm.error.status}.jpg`,
-          alt: `${vs.vm.error.status} error`
+          src: `${distPath}/${vs.error.status}.jpg`,
+          alt: `${vs.error.status} error`
         }))
       ]),
-      m(Menu, vs.vm)
+      m(Menu, {
+        app: va.app,
+        slug: vs.slug
+      })
     ]))),
-    m(Footer, vs.vm)
+    m(Footer, {
+      app: va.app,
+      slug: vs.slug
+    })
   ]))
 }

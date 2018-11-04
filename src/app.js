@@ -3,11 +3,10 @@
 
 import m from 'mithril'
 
-import routes from './routes.js'
-import stateManager from './stateman.js'
-import resources from './resources.js'
-import store from 'store'
-import t from './translate.js'
+import routes from './routes'
+import stateManager from './stateman'
+import resources from './resources'
+import t from './lib/translate'
 
 import './scss/style.scss'
 import './img/favicon.ico'
@@ -18,29 +17,33 @@ import './img/404.jpg'
 
 const sharedState = window.__preloadedState || {}
 
-// Get src state from server shared state and local storage
-const globalsFromStore = store.get('globals') || {}
+// Get src state from server shared state
 const stateman = Object.create(stateManager)
-stateman.init(Object.assign({}, sharedState, globalsFromStore))
-const activeLanguage = stateman.get('globals.activeLanguage') || 'en'
+stateman.init(Object.assign({}, sharedState))
+const activeLanguage = stateman.get('activeLanguage') || 'en'
 const fetcher = Object.create(resources)
 fetcher.init(activeLanguage)
 
 const clientRoutes = {}
 
 fetcher.getTranslations()
-  .then((messages) => {
+  .then(messages => {
     t.init(messages)
-    return stateman.get('sections') || fetcher.getSections()
+    return stateman.get('sections')
+      ? Promise.resolve()
+      : fetcher.getSections()
+        .then(sections => { stateman.set('sections', sections) })
   })
-  .then((sections) => {
-    const attrs = { fetcher: fetcher, stateman: stateman, sections: sections }
-    Object.keys(routes).forEach((route) => {
+  .then(() => {
+    const app = { activeLanguage, fetcher, stateman }
+    Object.keys(routes).forEach(route => {
       clientRoutes[route] = {
-        onmatch: (args, requestedPath) => routes[route].onmatch ? routes[route].onmatch(attrs, requestedPath) : routes[route],
-        render: (vnode) => {
-          Object.assign(vnode.attrs, attrs)
-          return vnode
+        onmatch: (attrs, requestedPath) => {
+          attrs.app = app
+          attrs.url = requestedPath
+          return routes[route].onmatch
+            ? routes[route].onmatch({ app, url: requestedPath }, requestedPath)
+            : routes[route]
         }
       }
     })

@@ -2,4 +2,4 @@
 // ==============================================================
 
 require = require('esm')(module/*, options */)
-module.exports = require('./src/server/app')
+module.exports = require('./src/server-side-render/app')

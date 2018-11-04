@@ -4,11 +4,11 @@
 import languages from '../docs/languages.json'
 
 // Mithril base components
-import Admin from './pages/admin.js'
-import Home from './pages/home.js'
-import Login from './pages/login.js'
-import NotFound from './pages/notfound.js'
-import Section from './pages/section.js'
+import Admin from './pages/admin'
+import Home from './pages/home'
+import Login from './pages/login'
+import NotFound from './pages/notfound'
+import Section from './pages/section'
 
 // List of allowed languages
 const allowedLanguages = languages.map(language => language.slug)

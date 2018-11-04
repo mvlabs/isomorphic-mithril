@@ -1,3 +1,4 @@
+/* global location */
 import cookie from 'js-cookie'
 
 let cookies = {}

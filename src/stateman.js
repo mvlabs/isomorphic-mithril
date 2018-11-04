@@ -38,7 +38,7 @@ const stateman = {
     }
   },
 
-  // Only needed for server side rendering, do not use client side
+  // Only needed for server-side-render side rendering, do not use client side
   _getString: () => JSON.stringify(state)
 }
 

@@ -6,15 +6,15 @@ const languages = require('../../docs/languages.json').filter(language => ['en',
 
 export default {
   view: ({ attrs: va }) => m('.navbar-item.has-dropdown.is-hoverable', [
-    va.globals.activeLanguage ? m('a.navbar-link.is-uppercase', [
+    !!va.app.activeLanguage && m('a.navbar-link.is-uppercase', [
       m('img.switch-lang-flag', {
-        src: `${distPath}/flag-${va.globals.activeLanguage}.png`,
+        src: `${distPath}/flag-${va.app.activeLanguage}.png`,
         alt: ''
       }),
-      va.globals.activeLanguage
-    ]) : null,
-    m('.navbar-dropdown', languages.map(language => language.slug !== va.globals.activeLanguage && m('a.navbar-item', {
-      href: '/' + language.slug + '/' + (va.slug === 'index' ? '' : (va.isSection ? 'sections/' : '') + va.slug)
+      va.app.activeLanguage
+    ]),
+    m('.navbar-dropdown', languages.map(language => language.slug !== va.app.activeLanguage && m('a.navbar-item', {
+      href: `/${language.slug}/${va.slug === 'index' ? '' : (va.isSection ? 'sections/' : '') + va.slug}`
     }, [
       m('img.switch-lang-flag', {
         src: `${distPath}/flag-${language.slug}.png`,

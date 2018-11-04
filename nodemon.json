@@ -1,0 +1,12 @@
+{
+  "watch": [
+    "src/server-side-render",
+    "dist"
+  ],
+  "env": {
+    "NODE_ENV": "develop"
+  },
+  "events": {
+    "restart": "echo \"app restarted with title nodemon\""
+  }
+}

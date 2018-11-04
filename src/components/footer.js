@@ -1,5 +1,5 @@
 import m from 'mithril'
-import t from '../translate'
+import t from '../lib/translate'
 import { distPath } from '../config'
 
 const Footer = {
@@ -35,7 +35,7 @@ const Footer = {
         ]),
         m('.column', [
           m('a', {
-            href: '/' + va.globals.activeLanguage + '/admin',
+            href: '/' + va.app.activeLanguage + '/admin',
             oncreate: m.route.link
           }, t('footer.admin_area'))
         ])

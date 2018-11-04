@@ -1,10 +1,10 @@
-import auth from './auth.js'
+import auth from './auth'
 import marked from 'marked'
-import request from './request.js'
+import request from './lib/request'
 
 const port = process.env.PORT || 3000
-const localUrl = window.location.protocol + '//' + (process.browser ? window.location.host : '127.0.0.1:' + port)
-const localData = localUrl + '/docs'
+const localUrl = `${window.location.protocol}//${process.browser ? window.location.host : '127.0.0.1:' + port}`
+const localData = `${localUrl}/docs`
 let activeLanguage
 
 const manageErrors = (err) => {

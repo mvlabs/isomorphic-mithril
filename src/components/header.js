@@ -1,10 +1,10 @@
 import m from 'mithril'
-import LanguagePicker from './language-picker.js'
-import t from '../translate.js'
+import LanguagePicker from './language-picker'
+import t from '../lib/translate'
 
 export default {
   oninit: ({ attrs: va, state: vs }) => {
-    vs.isAuth = va.fetcher.isAuth()
+    vs.isAuth = va.app.fetcher.isAuth()
   },
 
   oncreate: () => {
@@ -30,7 +30,7 @@ export default {
     m('.container', [
       m('.navbar-brand', [
         m('a.navbar-item', {
-          href: `/${va.globals.activeLanguage}/`,
+          href: `/${va.app.activeLanguage}/`,
           oncreate: m.route.link
         }, t('header.title')),
         m('.navbar-burger.burger[data-target="navbar-menu"]', [
@@ -52,7 +52,7 @@ export default {
             'Github'
           ]),
           m(LanguagePicker, {
-            globals: va.globals,
+            app: va.app,
             slug: va.slug,
             isSection: va.isSection === true
           }),
@@ -60,7 +60,7 @@ export default {
             href: '#',
             onclick (e) {
               e.preventDefault()
-              va.fetcher.logout()
+              va.app.fetcher.logout()
             }
           }, t('login.logout')) : null
         ])
