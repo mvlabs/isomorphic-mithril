@@ -1,7 +1,7 @@
-// USER
-// ==============================================================
+import { checkAuth } from './auth'
 
-export default (req, res, next) => {
+export default (req, res) => {
+  checkAuth(req, res)
   // Random user data provided by https://randomuser.me/
   const userData = {
     gender: 'male',

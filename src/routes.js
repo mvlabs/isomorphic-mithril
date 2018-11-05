@@ -24,7 +24,6 @@ const plainRoutes = {
 
 // Build the complete routes tree for all the languages
 const routes = {}
-routes['/'] = Home
 allowedLanguages.forEach(language => {
   for (let route in plainRoutes) {
     routes[`/${language}${route}`] = plainRoutes[route]

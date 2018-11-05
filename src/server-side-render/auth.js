@@ -5,9 +5,7 @@ import jwt from 'jsonwebtoken'
 
 const jwtUsersAuth = 'bf4d62d9acaf1c7c8dd50976243da07d536bb0ac4146306c33a3d3d766243215767911a0547dd5ee5d3126263c33fbc8a58625810076b4af7de4321d2fa3f46c'
 
-const auth = {}
-
-auth.check = function (req, res, next) {
+const checkAuth = (req, res) => {
   const token = req.headers['user-auth-token']
   jwt.verify(token, jwtUsersAuth, { ignoreNotBefore: true }, (err, decoded) => {
     if (err) {
@@ -15,13 +13,11 @@ auth.check = function (req, res, next) {
         status: 403,
         message: 'Not authorized'
       })
-    } else {
-      next()
     }
   })
 }
 
-auth.login = (req, res) => {
+const login = (req, res) => {
   // Dummy auth check
   const isAuth = req.body.email === 'elijah.scott@example.com' && req.body.password === 'secretpassword'
 
@@ -45,4 +41,7 @@ auth.login = (req, res) => {
   }
 }
 
-export default auth
+export {
+  checkAuth,
+  login
+}

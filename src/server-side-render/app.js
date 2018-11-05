@@ -2,13 +2,13 @@
 // ==============================================================
 
 import './browser-mock'
-import bodyParser from 'body-parser'
-import cookieParser from 'cookie-parser'
-import express from 'express'
+import cookieParser from 'fastify-cookie'
+import fastify from 'fastify'
 import m from 'mithril'
 import path from 'path'
+import serveStatic from 'fastify-static'
 import toHTML from 'mithril-node-render'
-import serverAuth from './auth'
+import { login } from './auth'
 import toc from './toc'
 import translations from './translations'
 import user from './user'
@@ -16,7 +16,7 @@ import authman from '../authman'
 import resources from '../resources'
 import routes from '../routes'
 import stateman from '../stateman'
-import checkLanguage from '../lib/check-language'
+// import checkLanguage from '../lib/check-language'
 import { getBuildHashes } from '../lib/hash'
 import i18n from '../lib/i18n'
 
@@ -24,22 +24,35 @@ const port = process.env.PORT || 3000
 
 getBuildHashes()
   .then(hashes => {
-    const app = express()
-    const router = express.Router()
+    const app = fastify()
 
-    app.use(bodyParser.json())
-    app.use(cookieParser())
+    // Cookies
+    app.register(cookieParser, err => {
+      if (err) throw err
+    })
 
-    // Serve static assets via Express
-    app.use('/docs', express.static(path.join(__dirname, '../../docs')))
-    app.use('/dist', express.static(path.join(__dirname, '../../dist')))
+    // Static content
+    app.register((instance, opts, next) => {
+      instance.register(serveStatic, {
+        root: path.join(__dirname, '../../dist'),
+        prefix: '/dist/'
+      })
+      next()
+    })
+    app.register((instance, opts, next) => {
+      instance.register(serveStatic, {
+        root: path.join(__dirname, '../../docs'),
+        prefix: '/docs/'
+      })
+      next()
+    })
 
     // Redirect to the default language
-    app.get('/', (req, res) => res.redirect('/en/'))
+    app.get('/', (req, res) => { res.redirect('/en/') })
 
     // Build Express routes mapping Mithril routes
     Object.keys(routes).forEach(route => {
-      router.get(route, checkLanguage, (req, res, next) => {
+      app.get(route, (req, res) => {
         const module = routes[route]
         const onmatch = module.onmatch || (() => module)
         const render = module.render || (a => a)
@@ -65,26 +78,31 @@ getBuildHashes()
             res,
             state,
             t,
-            url: req.url
+            url: req.raw.url
           }
         })
 
         Promise.resolve()
-          .then(() => m(onmatch(attrs, req.url) || 'div', attrs))
+          .then(() => m(onmatch(attrs, req.raw.url) || 'div', attrs))
           .then(render)
           .then(toHTML)
-          .then(html => res.type('html').send(html))
-          .catch(next)
+          .then(html => res.type('text/html').send(html))
+          // .catch(next)
       })
     })
 
-    app.use('/', router)
-
     // API
-    app.post('/api/auth', serverAuth.login)
-    app.get('/api/user', serverAuth.check, user)
+    app.post('/api/auth', login)
+    // app.get('/api/user', serverAuth.check)
+    app.get('/api/user', user)
 
-    app.listen(port, () => {
+    // Error handling
+    app.setNotFoundHandler((req, res) => {
+      res.redirect('/en/') // TODO render 404 page
+    })
+
+    app.listen(port, '0.0.0.0', err => {
+      if (err) throw err
       console.log('\x1b[35m%s\x1b[0m', `[SSR] Listening on localhost:${port}...`)
     })
   })
