@@ -2,10 +2,6 @@ import m from 'mithril'
 import LanguagePicker from './language-picker'
 
 export default {
-  oninit: ({ attrs: va, state: vs }) => {
-    vs.isAuth = va.app.fetcher.isAuth()
-  },
-
   oncreate: () => {
     // Get all "navbar-burger" elements
     const navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0)
@@ -25,7 +21,7 @@ export default {
     }
   },
 
-  view: ({ attrs: va, state: vs }) => m('nav.navbar.is-primary', [
+  view: ({ attrs: va }) => m('nav.navbar.is-primary', [
     m('.container', [
       m('.navbar-brand', [
         m('a.navbar-item', {
@@ -55,11 +51,11 @@ export default {
             page: va.page,
             isSection: va.isSection
           }),
-          vs.isAuth ? m('a.navbar-item', {
+          va.app.auth.isAuth() ? m('a.navbar-item', {
             href: '#',
             onclick (e) {
               e.preventDefault()
-              va.app.fetcher.logout()
+              va.app.auth.logout()
             }
           }, va.app.t('login.logout')) : null
         ])

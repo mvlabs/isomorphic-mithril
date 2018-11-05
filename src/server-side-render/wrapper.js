@@ -28,8 +28,7 @@ const Wrapper = {
       ]),
       m('body', [
         children,
-        m('script', `window.__preloadedState = ${vs.sharedState}`),
-        m('script', { src: `/dist/app.${vs.hashes.js}.js` }),
+        m('script', `window.__sharedState = ${vs.sharedState}`),
         m('script', { src: `/dist/app.${vs.hashes.js}.js` }),
         m('script', { src: `/dist/vendors~app.${vs.hashes.jsVendors}.js` }),
         gtmID ? m('script', `(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

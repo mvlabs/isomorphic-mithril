@@ -3,6 +3,7 @@
 
 import m from 'mithril'
 
+import authman from './authman'
 import routes from './routes'
 import stateman from './stateman'
 import resources from './resources'
@@ -13,15 +14,18 @@ import './scss/style.scss'
 // Static assets
 import './assets'
 
-const sharedState = window.__preloadedState || {}
+// Get state from server shared state
+const sharedState = window.__sharedState || {}
 
-// Get src state from server shared state
-const state = stateman(Object.assign({}, sharedState))
+// Init app
+const auth = authman()
+const state = stateman(sharedState)
 const activeLanguage = state.get('activeLanguage') || 'en'
-const fetcher = resources(activeLanguage)
+const fetcher = resources(activeLanguage, auth)
 
 const clientRoutes = {}
 
+// Get sections from state or fetch them
 const getSections = () => state.get('sections')
   ? Promise.resolve()
   : fetcher.getSections()
@@ -31,20 +35,28 @@ getSections()
   .then(() => fetcher.getTranslations())
   .then(translations => {
     const t = i18n(translations)
-    const app = { activeLanguage, fetcher, state, t }
-    Object.keys(routes).forEach(route => {
+    const app = {
+      auth,
+      activeLanguage,
+      fetcher,
+      state,
+      t
+    }
+    for (let route in routes) {
       clientRoutes[route] = {
         onmatch: (attrs, requestedPath) => {
           attrs.app = app
           attrs.url = requestedPath
           return routes[route].onmatch
-            ? routes[route].onmatch({ app, url: requestedPath }, requestedPath)
+            ? routes[route].onmatch(attrs, requestedPath)
             : routes[route]
         }
       }
-    })
+    }
   })
   .then(() => {
+    // Change the default hashbang route prefix to make server and client routes match
     m.route.prefix('')
+    // Mount the SPA in the document body
     m.route(document.body, '/', clientRoutes)
   })

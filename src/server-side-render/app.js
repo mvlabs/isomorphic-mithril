@@ -2,22 +2,23 @@
 // ==============================================================
 
 import './browser-mock'
-import auth from './auth'
 import bodyParser from 'body-parser'
-import checkLanguage from '../lib/check-language'
 import cookieParser from 'cookie-parser'
 import express from 'express'
-import { getBuildHashes } from '../lib/hash'
 import m from 'mithril'
 import path from 'path'
+import toHTML from 'mithril-node-render'
+import serverAuth from './auth'
+import toc from './toc'
+import translations from './translations'
+import user from './user'
+import authman from '../authman'
 import resources from '../resources'
 import routes from '../routes'
 import stateman from '../stateman'
+import checkLanguage from '../lib/check-language'
+import { getBuildHashes } from '../lib/hash'
 import i18n from '../lib/i18n'
-import toHTML from 'mithril-node-render'
-import user from './user'
-import toc from './toc'
-import translations from './translations'
 
 const port = process.env.PORT || 3000
 
@@ -46,17 +47,26 @@ getBuildHashes()
         const activeLanguage = req.activeLanguage || 'en'
         const sections = toc[activeLanguage]
 
-        // Istantiate a new state at every request
+        // Istantiate a new app at every request
+        const auth = authman(req.cookies)
         const state = stateman({
           activeLanguage,
           hashes,
           sections
         })
-        const fetcher = resources(activeLanguage, req.cookies)
+        const fetcher = resources(activeLanguage, auth)
         const t = i18n(translations[activeLanguage])
 
         const attrs = Object.assign({}, req.params, req.query, {
-          app: { activeLanguage, fetcher, res, state, t, url: req.url }
+          app: {
+            activeLanguage,
+            auth,
+            fetcher,
+            res,
+            state,
+            t,
+            url: req.url
+          }
         })
 
         Promise.resolve()
@@ -71,8 +81,8 @@ getBuildHashes()
     app.use('/', router)
 
     // API
-    app.post('/api/auth', auth.login)
-    app.get('/api/user', auth.check, user)
+    app.post('/api/auth', serverAuth.login)
+    app.get('/api/user', serverAuth.check, user)
 
     app.listen(port, () => {
       console.log('\x1b[35m%s\x1b[0m', `[SSR] Listening on localhost:${port}...`)

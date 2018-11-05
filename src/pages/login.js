@@ -4,10 +4,6 @@ import Header from '../components/header'
 import Wrapper from '../components/wrapper'
 import Menu from '../components/menu'
 
-const withKey = callback => e => {
-  if (e.keyCode === 13) callback()
-}
-
 export default {
   oninit: ({ attrs: va, state: vs }) => {
     vs.page = {
@@ -52,7 +48,12 @@ export default {
     m('main.main.section', m('.container', m('.columns.is-desktop.reverse-row-order', [
       m('.column.is-three-quarters-desktop.content', [
         m('h1', va.app.t('login.login')),
-        m('form.login-form.', [
+        m('form.login-form.', {
+          onsubmit (e) {
+            e.preventDefault()
+            vs.submit()
+          }
+        }, [
           vs.error ? m('p.alert.alert-danger', m('strong', vs.error.message)) : null,
           m('label.mb2', {
             for: 'login-email',
@@ -65,8 +66,7 @@ export default {
               id: 'login-email',
               type: 'email',
               required: true,
-              autofocus: true,
-              onkeypress: withKey(vs.submit)
+              autofocus: true
             })
           ]),
           m('label.mb2', {
@@ -79,8 +79,7 @@ export default {
               value: vs.loginForm.password,
               id: 'login-password',
               type: 'password',
-              required: true,
-              onkeypress: withKey(vs.submit)
+              required: true
             })
           ]),
           m('.actions', vs.loading
@@ -88,8 +87,7 @@ export default {
               type: 'button'
             }, m('i.fa.fa-spinner.fa-pulse'))
             : m('button.button.is-primary.is-uppercase.mt2', {
-              type: 'button',
-              onclick: vs.submit
+              type: 'submit'
             }, va.app.t('login.login')))
         ])
       ]),

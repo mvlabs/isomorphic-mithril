@@ -7,7 +7,7 @@ import Wrapper from '../components/wrapper'
 import NotFound from './notfound'
 import { decode } from '../lib/decode-markdown'
 
-const Home = {
+export default {
   oninit: ({ attrs: va, state: vs }) => new Promise(resolve => {
     vs.page = {
       slug: 'index',
@@ -15,14 +15,14 @@ const Home = {
     }
     const statePrefix = `home.${va.app.activeLanguage}`
 
-    const pageContent = va.app.state.get(statePrefix + '.content')
+    const pageContent = va.app.state.get(`${statePrefix}.content`)
     if (!pageContent) {
       vs.loading = true
       va.app.fetcher.getSection('index')
         .then(decode)
         .then(content => {
           vs.page.content = m.trust(content)
-          va.app.state.set(statePrefix + '.content', content)
+          va.app.state.set(`${statePrefix}.content`, content)
           vs.loading = false
           resolve()
         })
@@ -55,5 +55,3 @@ const Home = {
     ]))
   }
 }
-
-export default Home

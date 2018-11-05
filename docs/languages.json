@@ -12,12 +12,5 @@
         "name": "Italian",
         "native_name": "Italiano",
         "locale": "it_IT"
-    },
-    {
-        "id": 3,
-        "slug": "de",
-        "name": "German",
-        "native_name": "Deutsch",
-        "locale": "de_DE"
     }
 ]

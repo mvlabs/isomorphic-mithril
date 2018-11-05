@@ -1,5 +1,5 @@
 const Wrapper = process.env.BROWSER
-  ? { view: ({ children }) => children }
+  ? { view: vnode => vnode.children }
   : require('../server-side-render/wrapper')
 
 module.exports = Wrapper

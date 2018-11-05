@@ -26,9 +26,9 @@ const plainRoutes = {
 const routes = {}
 routes['/'] = Home
 allowedLanguages.forEach(language => {
-  Object.keys(plainRoutes).forEach(route => {
+  for (let route in plainRoutes) {
     routes[`/${language}${route}`] = plainRoutes[route]
-  })
+  }
 })
 // Catchall route for 404 error
 routes['/:other'] = NotFound
